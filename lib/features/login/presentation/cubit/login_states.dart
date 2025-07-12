@@ -1,4 +1,4 @@
-import 'package:buro_app/features/login/domain/model/login_model.dart';
+import 'package:buro_app/features/login/domain/model/user_model.dart';
 
 abstract class LoginStates {}
 
@@ -7,7 +7,7 @@ class LoginInitial extends LoginStates {}
 class LoginLoading extends LoginStates {}
 
 class LoginSuccess extends LoginStates {
-  final LoginModel model;
+  final UserModel model;
   LoginSuccess(this.model);
 }
 

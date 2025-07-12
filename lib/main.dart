@@ -1,10 +1,11 @@
 import 'package:buro_app/di/injection.dart';
+import 'package:buro_app/preferences/app_preferences.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'screens/onboarding_screen.dart';
 import 'features/login/presentation/screens/login_screen.dart';
 import 'screens/register_screen.dart';
-import 'screens/welcome_screen.dart';
+import 'features/welcome/presentation/screens/welcome_screen.dart';
 import 'screens/mode_explanation_screen.dart';
 import 'screens/already_registered_screen.dart';
 import 'screens/home_screen.dart';
@@ -122,6 +123,7 @@ class AppNavigator extends StatefulWidget {
 }
 
 class _AppNavigatorState extends State<AppNavigator> {
+
   String _currentScreen = 'onboarding';
   User? _user;
   String? _selectedMode;
@@ -132,9 +134,14 @@ class _AppNavigatorState extends State<AppNavigator> {
   void initState() {
     super.initState();
     // Simulate checking for logged in user
-    Future.delayed(const Duration(seconds: 1), () {
+    Future.delayed(const Duration(seconds: 1), () async {
+      final prefs = AppPreferences.instance;
+      final user = await prefs.getUser();
       if (mounted) {
         setState(() {
+          if (user != null) {
+            _currentScreen = 'welcome';
+          }
           _isLoading = false;
         });
       }
@@ -151,6 +158,10 @@ class _AppNavigatorState extends State<AppNavigator> {
   }
 
   void handleLogout() {
+    Future.delayed(const Duration(milliseconds: 100), () async {
+      final prefs = AppPreferences.instance;
+      await prefs.clearUser();
+    });
     if (mounted) {
       setState(() {
         _user = null;
@@ -213,7 +224,6 @@ class _AppNavigatorState extends State<AppNavigator> {
         return RegisterScreen(onNavigate: navigateTo);
       case 'welcome':
         return WelcomeScreen(
-          user: _user,
           onLogout: handleLogout,
           onModeSelect: handleModeSelection,
         );

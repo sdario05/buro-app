@@ -1,4 +1,4 @@
-import 'package:buro_app/features/login/presentation/widget/login_button.dart';
+import 'package:buro_app/features/login/presentation/widgets/login_button.dart';
 import 'package:buro_app/features/login/presentation/cubit/login_cubit.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -28,17 +28,17 @@ class _LoginScreenContentState extends State<LoginScreenContent> {
     super.dispose();
   }
 
-  void onLoginSuccess() {
+  void _onLoginSuccess() {
     widget.onNavigate('welcome');
   }
 
-  void onLoginError(String msg) {
+  void _onLoginError(String msg) {
     setState(() {
         _errorMessage = msg.replaceAll('Exception: ', '');
       });
   }
 
-  void onLoginLoading() {
+  Future<void> _onLoginLoading() async {
     setState(() {
         _errorMessage = null;
     });
@@ -151,7 +151,7 @@ class _LoginScreenContentState extends State<LoginScreenContent> {
                       keyboardType: TextInputType.emailAddress,
                       textInputAction: TextInputAction.next,
                       onChanged: (value) {
-                        onLoginLoading();
+                        _onLoginLoading();
                       },
                     ),
                     const SizedBox(height: 16),
@@ -180,7 +180,7 @@ class _LoginScreenContentState extends State<LoginScreenContent> {
                         context.read<LoginCubit>().login(_emailController.text, _passwordController.text);
                       },
                       onChanged: (value) {
-                        onLoginLoading();
+                        _onLoginLoading();
                       },
                     ),
                     const SizedBox(height: 16),
@@ -207,13 +207,13 @@ class _LoginScreenContentState extends State<LoginScreenContent> {
                       userName: _emailController.text,
                       password: _passwordController.text,
                       onSuccess: () {
-                        onLoginSuccess();
+                        _onLoginSuccess();
                       },
                       onError: (msg) {
-                        onLoginError(msg);
+                        _onLoginError(msg);
                       },
                       onLoading: () {
-                        onLoginLoading();
+                        _onLoginLoading();
                       }
                     ),
                     const SizedBox(height: 16),

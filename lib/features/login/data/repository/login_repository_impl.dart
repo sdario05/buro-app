@@ -1,7 +1,8 @@
-import 'package:buro_app/features/login/domain/model/login_model.dart';
+import 'package:buro_app/features/login/data/service/login_service.dart';
+import 'package:buro_app/features/login/domain/model/user_model.dart';
 import 'package:buro_app/features/login/domain/repository/login_repository.dart';
+import 'package:buro_app/preferences/app_preferences.dart';
 
-import '../service/login_service.dart';
 
 class LoginRepositoryImpl implements LoginRepository {
   final LoginService service;
@@ -9,7 +10,10 @@ class LoginRepositoryImpl implements LoginRepository {
   LoginRepositoryImpl(this.service);
 
   @override
-  Future<LoginModel> login(String userName, String password) async {
-    return await service.login(userName, password);
+  Future<UserModel> login(String userName, String password) async {
+    final UserModel response = await service.login(userName, password);
+    final prefs = AppPreferences.instance;
+    await prefs.saveUser(response);
+    return response;
   }
 }
