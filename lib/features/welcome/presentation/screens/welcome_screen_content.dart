@@ -1,8 +1,8 @@
 import 'package:buro_app/features/welcome/domain/model/carousel_model.dart';
 import 'package:buro_app/features/welcome/presentation/cubit/carousel_cubit.dart';
 import 'package:buro_app/features/welcome/presentation/cubit/carousel_states.dart';
-import 'package:buro_app/features/welcome/presentation/cubit/user_name_cubit.dart';
-import 'package:buro_app/features/welcome/presentation/cubit/user_name_states.dart';
+import 'package:buro_app/shared/cubit/user_name_cubit.dart';
+import 'package:buro_app/shared/cubit/user_name_states.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'dart:async';
@@ -40,7 +40,7 @@ class _WelcomeScreenContentState extends State<WelcomeScreenContent> {
   }
 
   void _startAutoSlide(int length) {
-    _timer = Timer.periodic(Duration(seconds: 5), (timer) {
+    _timer = Timer.periodic(const Duration(seconds: 5), (timer) {
       if (_currentSlide < length - 1) {
         _currentSlide++;
       } else {
@@ -76,7 +76,7 @@ class _WelcomeScreenContentState extends State<WelcomeScreenContent> {
                       color: Colors.grey[200],
                       shape: BoxShape.circle,
                     ),
-                    child: Center(
+                    child: const Center(
                       child: Text(
                         'Logo',
                         style: TextStyle(
@@ -154,7 +154,7 @@ class _WelcomeScreenContentState extends State<WelcomeScreenContent> {
                                 itemCount: list.length,
                                 itemBuilder: (context, index) {
                                   return Container(
-                                    margin: EdgeInsets.symmetric(horizontal: 16),
+                                    margin: const EdgeInsets.symmetric(horizontal: 16),
                                     decoration: BoxDecoration(
                                       borderRadius: BorderRadius.circular(8),
                                     ),
@@ -164,10 +164,10 @@ class _WelcomeScreenContentState extends State<WelcomeScreenContent> {
                                       fit: BoxFit.cover,
                                       loadingBuilder: (context, child, loadingProgress) {
                                         if (loadingProgress == null) return child;
-                                        return Center(child: CircularProgressIndicator());
+                                        return const Center(child: CircularProgressIndicator());
                                       },
                                       errorBuilder: (context, error, stackTrace) {
-                                        return Center(child: Icon(Icons.broken_image, color: Colors.grey));
+                                        return const Center(child: Icon(Icons.broken_image, color: Colors.grey));
                                       },
                                     ),
                                   );
@@ -185,7 +185,7 @@ class _WelcomeScreenContentState extends State<WelcomeScreenContent> {
                                       (index) => Container(
                                     width: 8,
                                     height: 8,
-                                    margin: EdgeInsets.symmetric(horizontal: 4),
+                                    margin: const EdgeInsets.symmetric(horizontal: 4),
                                     decoration: BoxDecoration(
                                       shape: BoxShape.circle,
                                       color: _currentSlide == index ? Colors.black : Colors.grey[300],

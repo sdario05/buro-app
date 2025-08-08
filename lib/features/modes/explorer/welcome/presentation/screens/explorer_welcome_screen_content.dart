@@ -1,15 +1,19 @@
+import 'package:buro_app/features/modes/explorer/welcome/presentation/widget/welcome_text.dart';
+import 'package:buro_app/shared/action/getgifanimation/presentation/cubit/gif_animation_cubit.dart';
+import 'package:buro_app/shared/action/getgifanimation/presentation/cubit/gif_animation_states.dart';
+import 'package:buro_app/shared/cubit/user_name_cubit.dart';
+import 'package:buro_app/shared/cubit/user_name_states.dart';
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
-import '../utils/app_styles.dart';
-import '../models/user.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_cache_manager/flutter_cache_manager.dart';
 
-class ExplorerWelcomeScreen extends StatelessWidget {
-  final User user;
+class ExplorerWelcomeScreenContent extends StatelessWidget {
   final Function(String) onNavigate;
   final Function() onBack;
 
-  const ExplorerWelcomeScreen({
+  const ExplorerWelcomeScreenContent({
     Key? key,
-    required this.user,
     required this.onNavigate,
     required this.onBack,
   }) : super(key: key);
@@ -68,63 +72,58 @@ class ExplorerWelcomeScreen extends StatelessWidget {
                       const SizedBox(height: 24),
                       
                       // Welcome message
-                      RichText(
-                        textAlign: TextAlign.center,
-                        text: TextSpan(
-                          style: const TextStyle(
-                            fontSize: 24,
-                            fontWeight: FontWeight.bold,
-                            color: Colors.black,
-                            height: 1.3,
-                          ),
-                          children: [
-                            TextSpan(
-                              text: 'Bienvenido ${user.firstName},\n',
-                            ),
-                            const TextSpan(
-                              text: '¡Nos alegra que quieras ser un ',
-                              style: TextStyle(
-                                fontWeight: FontWeight.normal,
-                              ),
-                            ),
-                            const TextSpan(
-                              text: 'explorador de empleos',
-                            ),
-                            const TextSpan(
-                              text: '!',
-                              style: TextStyle(
-                                fontWeight: FontWeight.normal,
-                              ),
-                            ),
-                          ],
-                        ),
+                      BlocBuilder<UserNameCubit, UserNameStates>(
+                          builder: (context, state) {
+                            switch (state) {
+                              case UserNameSuccess(name: String userName): {
+                                return WelcomeText(name: userName);
+                              }
+                              default: return const WelcomeText();
+                            }
+                          }
                       ),
                       
                       const SizedBox(height: 40),
                       
                       // Animation placeholder
-                      Container(
-                        width: double.infinity,
-                        height: 200,
-                        decoration: BoxDecoration(
-                          border: Border.all(
-                            color: Colors.grey.shade400,
-                            style: BorderStyle.solid,
-                            width: 2,
-                          ),
-                          borderRadius: BorderRadius.circular(8),
-                        ),
-                        child: Center(
-                          child: Text(
-                            'ANIMACIÓN\nFESTEJO\n(ESTÉTICA E.D.E)',
-                            textAlign: TextAlign.center,
-                            style: TextStyle(
-                              color: Colors.grey.shade600,
-                              fontSize: 14,
-                              height: 1.5,
-                            ),
-                          ),
-                        ),
+                      BlocBuilder<GifAnimationCubit, GifAnimationStates>(
+                          builder: (context, state) {
+                            switch (state) {
+                              case Success(gif: String gif): {
+                                return Container(
+                                  width: double.infinity,
+                                  height: 200,
+                                  decoration: BoxDecoration(
+                                    border: Border.all(
+                                      color: Colors.grey.shade400,
+                                      style: BorderStyle.solid,
+                                      width: 2,
+                                    ),
+                                    borderRadius: BorderRadius.circular(8),
+                                  ),
+                                  child: ClipRRect(
+                                    borderRadius: BorderRadius.circular(8),
+                                    child: CachedNetworkImage(
+                                      imageUrl: gif,
+                                      fit: BoxFit.cover,
+                                      cacheManager: CacheManager(
+                                          Config(
+                                            gif,
+                                            stalePeriod: const Duration(hours: 24),
+                                          )
+                                      ),
+                                      placeholder: (context, url) =>
+                                      const Center(child: CircularProgressIndicator()),
+                                      errorWidget: (context, url, error) =>
+                                      const Center(child: Icon(Icons.broken_image, color: Colors.grey)),
+                                    ),
+                                  ),
+                                );
+                              }
+                              default:
+                                return const SizedBox(height: 200,);
+                            }
+                          }
                       ),
                       
                       const SizedBox(height: 40),
@@ -132,7 +131,7 @@ class ExplorerWelcomeScreen extends StatelessWidget {
                       // CV options text
                       RichText(
                         textAlign: TextAlign.center,
-                        text: TextSpan(
+                        text: const TextSpan(
                           style: TextStyle(
                             fontSize: 16,
                             color: Colors.black,

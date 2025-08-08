@@ -2,13 +2,11 @@ import 'package:flutter/material.dart';
 import '../models/user.dart';
 
 class ExplorerGenerateCVWelcomeScreen extends StatelessWidget {
-  final User user;
   final Function(String) onNavigate;
   final Function() onBack;
 
   const ExplorerGenerateCVWelcomeScreen({
     Key? key,
-    required this.user,
     required this.onNavigate,
     required this.onBack,
   }) : super(key: key);
@@ -75,7 +73,7 @@ class ExplorerGenerateCVWelcomeScreen extends StatelessWidget {
                           ),
                           children: [
                             TextSpan(
-                              text: 'Bienvenido ${user.firstName},\n',
+                              text: 'Bienvenido Dario,\n',
                             ),
                             const TextSpan(
                               text: '¡Nos alegra que quieras ser un ',

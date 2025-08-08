@@ -1,0 +1,38 @@
+import 'package:buro_app/di/injection.dart';
+import 'package:buro_app/features/modes/explorer/welcome/presentation/screens/explorer_welcome_screen_content.dart';
+import 'package:buro_app/shared/action/getgifanimation/presentation/cubit/gif_animation_cubit.dart';
+import 'package:buro_app/shared/cubit/user_name_cubit.dart';
+import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+
+class ExplorerWelcomeScreen extends StatelessWidget {
+
+  final Function(String) onNavigate;
+  final Function() onBack;
+
+  const ExplorerWelcomeScreen({
+    super.key,
+    required this.onNavigate,
+    required this.onBack,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return MultiBlocProvider(
+      providers: [
+        BlocProvider<GifAnimationCubit>(
+            create: (context) => getIt<GifAnimationCubit>()
+              ..getAnimation(GifType.explorerWelcome)
+        ),
+        BlocProvider<UserNameCubit>(
+            create: (context) => getIt<UserNameCubit>()
+              ..getUserName()
+        )
+      ],
+      child: ExplorerWelcomeScreenContent(
+        onNavigate: onNavigate,
+        onBack: onBack,
+      ),
+    );
+  }
+}

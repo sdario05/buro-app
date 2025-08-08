@@ -1,4 +1,5 @@
 import 'package:buro_app/di/injection.dart';
+import 'package:buro_app/features/modes/explorer/explanation/presentation/screen/explorer_explanation_screen.dart';
 import 'package:buro_app/preferences/app_preferences.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -10,8 +11,7 @@ import 'screens/mode_explanation_screen.dart';
 import 'screens/already_registered_screen.dart';
 import 'screens/home_screen.dart';
 import 'screens/job_detail_screen.dart';
-import 'screens/explorer_explanation_screen.dart';
-import 'screens/explorer_welcome_screen.dart';
+import 'features/modes/explorer/welcome/presentation/screens/explorer_welcome_screen.dart';
 import 'screens/explorer_upload_cv_screen.dart';
 import 'screens/explorer_cv_success_screen.dart';
 import 'screens/explorer_profession_screen.dart';
@@ -230,14 +230,7 @@ class _AppNavigatorState extends State<AppNavigator> {
       case 'modeExplanation':
         return ModeExplanationScreen(
           mode: _selectedMode ?? 'visitante',
-          onNavigate: (screen) {
-            if (screen == 'welcome') {
-              // Si el usuario elige "No, prefiero ingresar directo"
-              navigateTo('home');
-            } else {
-              navigateTo(screen);
-            }
-          },
+          onNavigate: navigateTo,
           onBack: () => navigateTo('welcome'),
         );
       case 'alreadyRegistered':
@@ -255,7 +248,6 @@ class _AppNavigatorState extends State<AppNavigator> {
         );
       case 'explorer_welcome':
         return ExplorerWelcomeScreen(
-          user: _user!,
           onNavigate: navigateTo,
           onBack: () => navigateTo('welcome'),
         );
@@ -305,7 +297,6 @@ class _AppNavigatorState extends State<AppNavigator> {
       // Pantallas para generar CV (FLUJO GENERATE)
       case 'explorer_generate_cv':
         return ExplorerGenerateCVWelcomeScreen(
-          user: _user!,
           onNavigate: navigateTo,
           onBack: () => navigateTo('explorer_welcome'),
         );

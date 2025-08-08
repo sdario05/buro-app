@@ -1,11 +1,15 @@
+import 'package:buro_app/shared/action/getgifanimation/presentation/cubit/gif_animation_cubit.dart';
+import 'package:buro_app/shared/action/getgifanimation/presentation/cubit/gif_animation_states.dart';
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
-import '../utils/app_styles.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_cache_manager/flutter_cache_manager.dart';
 
-class ExplorerExplanationScreen extends StatelessWidget {
+class ExplorerExplanationScreenContent extends StatelessWidget {
   final Function(String) onNavigate;
   final Function() onBack;
 
-  const ExplorerExplanationScreen({
+  const ExplorerExplanationScreenContent({
     Key? key,
     required this.onNavigate,
     required this.onBack,
@@ -85,25 +89,46 @@ class ExplorerExplanationScreen extends StatelessWidget {
                     SizedBox(height: isSmallScreen ? 16 : 24),
 
                     // Animation placeholder
-                    Center(
-                      child: Container(
-                        height: isSmallScreen ? 150 : 200,
-                        width: double.infinity,
-                        decoration: BoxDecoration(
-                          color: Colors.grey[100],
-                          borderRadius: BorderRadius.circular(8),
-                        ),
-                        child: Center(
-                          child: Text(
-                            'Animación para Explorador',
-                            style: TextStyle(
-                              color: Colors.grey[400],
-                              fontSize: 14,
-                            ),
-                          ),
-                        ),
-                      ),
+                    BlocBuilder<GifAnimationCubit, GifAnimationStates>(
+                        builder: (context, state) {
+                          switch (state) {
+                            case Success(gif: String gif): {
+                              return Container(
+                                width: double.infinity,
+                                height: 200,
+                                decoration: BoxDecoration(
+                                  border: Border.all(
+                                    color: Colors.grey.shade400,
+                                    style: BorderStyle.solid,
+                                    width: 2,
+                                  ),
+                                  borderRadius: BorderRadius.circular(8),
+                                ),
+                                child: ClipRRect(
+                                  borderRadius: BorderRadius.circular(8),
+                                  child: CachedNetworkImage(
+                                    imageUrl: gif,
+                                    fit: BoxFit.cover,
+                                    cacheManager: CacheManager(
+                                        Config(
+                                          gif,
+                                          stalePeriod: const Duration(hours: 24),
+                                        )
+                                    ),
+                                    placeholder: (context, url) =>
+                                    const Center(child: CircularProgressIndicator()),
+                                    errorWidget: (context, url, error) =>
+                                    const Center(child: Icon(Icons.broken_image, color: Colors.grey)),
+                                  ),
+                                ),
+                              );
+                            }
+                            default:
+                              return const SizedBox(height: 200,);
+                          }
+                        }
                     ),
+
                     SizedBox(height: isSmallScreen ? 16 : 24),
 
                     // First time user message

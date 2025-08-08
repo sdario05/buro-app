@@ -8,7 +8,12 @@ import 'package:buro_app/features/welcome/data/service/carousel_service.dart';
 import 'package:buro_app/features/welcome/domain/repository/carousel_repository.dart';
 import 'package:buro_app/features/welcome/domain/usecase/get_carousel_use_case.dart';
 import 'package:buro_app/features/welcome/presentation/cubit/carousel_cubit.dart';
-import 'package:buro_app/features/welcome/presentation/cubit/user_name_cubit.dart';
+import 'package:buro_app/shared/action/getgifanimation/data/repository/gif_animation_repository_impl.dart';
+import 'package:buro_app/shared/action/getgifanimation/data/service/gif_animation_service.dart';
+import 'package:buro_app/shared/action/getgifanimation/domain/repository/gif_animation_repository.dart';
+import 'package:buro_app/shared/action/getgifanimation/domain/usecase/get_gif_animation_use_case.dart';
+import 'package:buro_app/shared/action/getgifanimation/presentation/cubit/gif_animation_cubit.dart';
+import 'package:buro_app/shared/cubit/user_name_cubit.dart';
 import 'package:get_it/get_it.dart';
 
 final getIt = GetIt.instance;
@@ -45,7 +50,25 @@ void setupLocator() {
         () => CarouselCubit(getIt<GetCarouselUseCase>()),
   );
 
+
+
   getIt.registerFactory<UserNameCubit>(
         () => UserNameCubit(),
+  );
+
+
+
+  getIt.registerLazySingleton<GifAnimationService>(() => GifAnimationService());
+
+  getIt.registerLazySingleton<GifAnimationRepository>(
+        () => GifAnimationRepositoryImpl(getIt<GifAnimationService>()),
+  );
+
+  getIt.registerLazySingleton<GetGifAnimationUseCase>(
+        () => GetGifAnimationUseCase(getIt<GifAnimationRepository>()),
+  );
+
+  getIt.registerFactory<GifAnimationCubit>(
+        () => GifAnimationCubit(getIt<GetGifAnimationUseCase>()),
   );
 }
