@@ -16,7 +16,7 @@ import 'screens/home_screen.dart';
 import 'screens/job_detail_screen.dart';
 import 'features/modes/explorer/welcome/presentation/screens/explorer_welcome_screen.dart';
 import 'features/modes/explorer/uploadcv/presentation/screens/explorer_upload_cv_screen.dart';
-import 'screens/explorer_confirmation_screen.dart';
+import 'features/modes/explorer/profession/presentation/screens/explorer_confirmation_screen.dart';
 import 'screens/explorer_contact_screen.dart';
 import 'screens/explorer_success_screen.dart';
 import 'screens/explorer_final_screen.dart';
@@ -483,7 +483,7 @@ class _AppNavigatorState extends State<AppNavigator> {
 
   void printScreenName(String screenName) {
     if (kDebugMode) {
-      print('********************************Screen: $screenName********************************');
+      print('******************************** Screen: $screenName ********************************');
     }
   }
 }

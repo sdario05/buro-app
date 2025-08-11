@@ -1,11 +1,17 @@
+import 'package:buro_app/preferences/app_preferences.dart';
+import 'package:buro_app/shared/action/getgifanimation/presentation/cubit/gif_animation_cubit.dart';
+import 'package:buro_app/shared/action/getgifanimation/presentation/cubit/gif_animation_states.dart';
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_cache_manager/flutter_cache_manager.dart';
 
-class ExplorerConfirmationScreen extends StatefulWidget {
+class ExplorerConfirmationScreenContent extends StatefulWidget {
   final Function(String) onNavigate;
   final Function() onBack;
   final List<String> professions; // Agregar esta línea
 
-  const ExplorerConfirmationScreen({
+  const ExplorerConfirmationScreenContent({
     Key? key,
     required this.onNavigate,
     required this.onBack,
@@ -13,10 +19,10 @@ class ExplorerConfirmationScreen extends StatefulWidget {
   }) : super(key: key);
 
   @override
-  _ExplorerConfirmationScreenState createState() => _ExplorerConfirmationScreenState();
+  _ExplorerConfirmationScreenContentState createState() => _ExplorerConfirmationScreenContentState();
 }
 
-class _ExplorerConfirmationScreenState extends State<ExplorerConfirmationScreen> {
+class _ExplorerConfirmationScreenContentState extends State<ExplorerConfirmationScreenContent> {
   bool _notificationsEnabled = false;
 
   @override
@@ -83,28 +89,44 @@ class _ExplorerConfirmationScreenState extends State<ExplorerConfirmationScreen>
                       const SizedBox(height: 32),
                       
                       // Animation placeholder
-                      Container(
-                        width: double.infinity,
-                        height: 180,
-                        decoration: BoxDecoration(
-                          border: Border.all(
-                            color: Colors.grey.shade400,
-                            style: BorderStyle.solid,
-                            width: 2,
-                          ),
-                          borderRadius: BorderRadius.circular(8),
-                        ),
-                        child: Center(
-                          child: Text(
-                            'ANIMACIÓN\nFESTEJO\n(ESTÉTICA E.D.E)',
-                            textAlign: TextAlign.center,
-                            style: TextStyle(
-                              color: Colors.grey.shade600,
-                              fontSize: 14,
-                              height: 1.5,
-                            ),
-                          ),
-                        ),
+                      BlocBuilder<GifAnimationCubit, GifAnimationStates>(
+                          builder: (context, state) {
+                            switch (state) {
+                              case Success(gif: String gif): {
+                                return Container(
+                                  width: double.infinity,
+                                  height: 200,
+                                  decoration: BoxDecoration(
+                                    border: Border.all(
+                                      color: Colors.grey.shade400,
+                                      style: BorderStyle.solid,
+                                      width: 2,
+                                    ),
+                                    borderRadius: BorderRadius.circular(8),
+                                  ),
+                                  child: ClipRRect(
+                                    borderRadius: BorderRadius.circular(8),
+                                    child: CachedNetworkImage(
+                                      imageUrl: gif,
+                                      fit: BoxFit.cover,
+                                      cacheManager: CacheManager(
+                                          Config(
+                                            gif,
+                                            stalePeriod: const Duration(hours: 24),
+                                          )
+                                      ),
+                                      placeholder: (context, url) =>
+                                      const Center(child: CircularProgressIndicator()),
+                                      errorWidget: (context, url, error) =>
+                                      const Center(child: Icon(Icons.broken_image, color: Colors.grey)),
+                                    ),
+                                  ),
+                                );
+                              }
+                              default:
+                                return const SizedBox(height: 200,);
+                            }
+                          }
                       ),
                       
                       const SizedBox(height: 32),
@@ -143,6 +165,7 @@ class _ExplorerConfirmationScreenState extends State<ExplorerConfirmationScreen>
                             onChanged: (value) {
                               setState(() {
                                 _notificationsEnabled = value ?? false;
+                                _saveNotificationsPreference(_notificationsEnabled);
                               });
                             },
                             materialTapTargetSize: MaterialTapTargetSize.shrinkWrap,
@@ -209,5 +232,10 @@ class _ExplorerConfirmationScreenState extends State<ExplorerConfirmationScreen>
         ),
       ),
     );
+  }
+
+  Future<void> _saveNotificationsPreference(bool value) async {
+    final prefs = AppPreferences.instance;
+    await prefs.saveNotificationsPreference(value);
   }
 }

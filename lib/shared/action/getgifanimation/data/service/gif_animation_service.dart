@@ -23,6 +23,8 @@ class GifAnimationService {
           return 'https://media2.giphy.com/media/v1.Y2lkPTc5MGI3NjExODN1YWxxOGt4YmVod3JieHJuM3NwbnRpdWV0bmVwY3FuZ2Q3dnhhNCZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/bqkFZzzE9E5WfnkZTO/giphy.gif';
         case GifType.explorerCvSuccess:
           return 'https://media0.giphy.com/media/v1.Y2lkPTc5MGI3NjExM2IyYWpsZjMzeXJkYWZxc3RuaXFvbmxtNGV6cnk1aGZ1emEzeXhhdSZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/3oz9ZE2Oo9zRC/giphy.gif';
+        case GifType.explorerProfessionSuccess:
+          return 'https://media3.giphy.com/media/v1.Y2lkPTc5MGI3NjExZzg5eHR4NnNocGFidmw0bG91bzgwMWg2aTNqcWltYm4xZmJhZGJ2YyZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/Oj5w7lOaR5ieNpuBhn/giphy.gif';
       }
     } else {
       throw Exception('Hubo un error al hacer obtener la info del carousel');

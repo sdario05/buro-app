@@ -28,4 +28,9 @@ class AppPreferences {
     final prefs = await _prefs;
     await prefs.remove('user');
   }
+
+  Future<void> saveNotificationsPreference(bool value) async {
+    final prefs = await _prefs;
+    await prefs.setBool('notifications', value);
+  }
 }

@@ -22,4 +22,5 @@ enum GifType {
   explorerExplanation,
   explorerWelcome,
   explorerCvSuccess,
+  explorerProfessionSuccess,
 }
