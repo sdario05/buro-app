@@ -15,7 +15,7 @@ class SaveButtonStates extends StatelessWidget {
     required this.onSaveSuccess,
   });
 
-  bool get _canSend => professions.any((entry) => entry.profession.isNotEmpty);
+  bool get _canSend => professions.any((entry) => entry.profession.trim().isNotEmpty);
 
   List<ProfessionEntry> notEmptyProfessions() {
     return professions.where((entry) => entry.profession.isNotEmpty).toList();
