@@ -3,6 +3,11 @@ import 'package:buro_app/features/login/data/service/login_service.dart';
 import 'package:buro_app/features/login/domain/repository/login_repository.dart';
 import 'package:buro_app/features/login/domain/usecase/login_use_case.dart';
 import 'package:buro_app/features/login/presentation/cubit/login_cubit.dart';
+import 'package:buro_app/features/modes/explorer/profession/data/repository/profession_repository_impl.dart';
+import 'package:buro_app/features/modes/explorer/profession/data/service/profession_service.dart';
+import 'package:buro_app/features/modes/explorer/profession/domain/repository/profession_repository.dart';
+import 'package:buro_app/features/modes/explorer/profession/domain/usecase/send_profession_use_case.dart';
+import 'package:buro_app/features/modes/explorer/profession/presentation/cubit/explorer_profession_cubit.dart';
 import 'package:buro_app/features/welcome/data/repository/carousel_repository.dart';
 import 'package:buro_app/features/welcome/data/service/carousel_service.dart';
 import 'package:buro_app/features/welcome/domain/repository/carousel_repository.dart';
@@ -33,9 +38,7 @@ void setupLocator() {
   getIt.registerFactory<LoginCubit>(
         () => LoginCubit(getIt<LoginUseCase>()),
   );
-
-
-
+  //========================================================================
   getIt.registerLazySingleton<CarouselService>(() => CarouselService());
 
   getIt.registerLazySingleton<CarouselRepository>(
@@ -49,15 +52,11 @@ void setupLocator() {
   getIt.registerFactory<CarouselCubit>(
         () => CarouselCubit(getIt<GetCarouselUseCase>()),
   );
-
-
-
+  //========================================================================
   getIt.registerFactory<UserNameCubit>(
         () => UserNameCubit(),
   );
-
-
-
+  //========================================================================
   getIt.registerLazySingleton<GifAnimationService>(() => GifAnimationService());
 
   getIt.registerLazySingleton<GifAnimationRepository>(
@@ -70,5 +69,19 @@ void setupLocator() {
 
   getIt.registerFactory<GifAnimationCubit>(
         () => GifAnimationCubit(getIt<GetGifAnimationUseCase>()),
+  );
+  //========================================================================
+  getIt.registerLazySingleton<ProfessionService>(() => ProfessionService());
+
+  getIt.registerLazySingleton<ProfessionRepository>(
+        () => ProfessionRepositoryImpl(getIt<ProfessionService>()),
+  );
+
+  getIt.registerLazySingleton<SendProfessionUseCase>(
+        () => SendProfessionUseCase(getIt<ProfessionRepository>()),
+  );
+
+  getIt.registerFactory<ExplorerProfessionCubit>(
+        () => ExplorerProfessionCubit(getIt<SendProfessionUseCase>()),
   );
 }

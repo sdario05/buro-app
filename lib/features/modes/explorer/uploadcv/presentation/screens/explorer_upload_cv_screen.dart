@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'dart:io';
-import '../utils/app_styles.dart';
+import '../../../../../../utils/app_styles.dart';
 
 class ExplorerUploadCVScreen extends StatefulWidget {
   final Function(String) onNavigate;

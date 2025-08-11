@@ -21,4 +21,5 @@ class GifAnimationCubit extends Cubit<GifAnimationStates> {
 enum GifType {
   explorerExplanation,
   explorerWelcome,
+  explorerCvSuccess,
 }

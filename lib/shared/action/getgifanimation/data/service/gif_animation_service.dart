@@ -20,7 +20,9 @@ class GifAnimationService {
         case GifType.explorerExplanation:
           return 'https://media1.giphy.com/media/v1.Y2lkPTc5MGI3NjExc3lwam1oZDN5Y281ZGpvZGtieDQxajh3OXQxMDZ5bnozYnVzcjR6byZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/l4KibOaou932EC7Dy/giphy.gif';
         case GifType.explorerWelcome:
-        return 'https://media2.giphy.com/media/v1.Y2lkPTc5MGI3NjExODN1YWxxOGt4YmVod3JieHJuM3NwbnRpdWV0bmVwY3FuZ2Q3dnhhNCZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/bqkFZzzE9E5WfnkZTO/giphy.gif';
+          return 'https://media2.giphy.com/media/v1.Y2lkPTc5MGI3NjExODN1YWxxOGt4YmVod3JieHJuM3NwbnRpdWV0bmVwY3FuZ2Q3dnhhNCZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/bqkFZzzE9E5WfnkZTO/giphy.gif';
+        case GifType.explorerCvSuccess:
+          return 'https://media0.giphy.com/media/v1.Y2lkPTc5MGI3NjExM2IyYWpsZjMzeXJkYWZxc3RuaXFvbmxtNGV6cnk1aGZ1emEzeXhhdSZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/3oz9ZE2Oo9zRC/giphy.gif';
       }
     } else {
       throw Exception('Hubo un error al hacer obtener la info del carousel');

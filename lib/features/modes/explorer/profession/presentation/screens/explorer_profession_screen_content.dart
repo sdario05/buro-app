@@ -1,23 +1,22 @@
+import 'package:buro_app/features/modes/explorer/profession/presentation/widget/save_button_states.dart';
 import 'package:flutter/material.dart';
 
-class ExplorerProfessionScreen extends StatefulWidget {
+class ExplorerProfessionScreenContent extends StatefulWidget {
   final Function(String, {dynamic data}) onNavigate;
   final Function() onBack;
 
-  const ExplorerProfessionScreen({
+  const ExplorerProfessionScreenContent({
     Key? key,
     required this.onNavigate,
     required this.onBack,
   }) : super(key: key);
 
   @override
-  _ExplorerProfessionScreenState createState() => _ExplorerProfessionScreenState();
+  _ExplorerProfessionScreenContentState createState() => _ExplorerProfessionScreenContentState();
 }
 
-class _ExplorerProfessionScreenState extends State<ExplorerProfessionScreen> {
+class _ExplorerProfessionScreenContentState extends State<ExplorerProfessionScreenContent> {
   final List<ProfessionEntry> _professions = [ProfessionEntry(profession: '', isReady: false)];
-
-  bool get _canContinue => _professions.any((entry) => entry.profession.isNotEmpty);
 
   @override
   Widget build(BuildContext context) {
@@ -118,33 +117,13 @@ class _ExplorerProfessionScreenState extends State<ExplorerProfessionScreen> {
                 ),
               ),
             ),
-            
+
             // Continue button
-            Padding(
-              padding: const EdgeInsets.all(24.0),
-              child: SizedBox(
-                width: double.infinity,
-                child: ElevatedButton(
-                  onPressed: _canContinue ? () => _continue() : null,
-                  style: ElevatedButton.styleFrom(
-                    backgroundColor: Colors.grey[400],
-                    foregroundColor: Colors.black,
-                    disabledBackgroundColor: Colors.grey[300],
-                    disabledForegroundColor: Colors.grey[500],
-                    padding: const EdgeInsets.symmetric(vertical: 16),
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(8),
-                    ),
-                  ),
-                  child: const Text(
-                    'Continuar',
-                    style: TextStyle(
-                      fontSize: 16,
-                      fontWeight: FontWeight.bold,
-                    ),
-                  ),
-                ),
-              ),
+            SaveButtonStates(
+              professions: _professions,
+              onSaveSuccess: (professions) {
+                widget.onNavigate('explorer_confirmation', data: professions);
+              },
             ),
           ],
         ),
@@ -282,17 +261,6 @@ class _ExplorerProfessionScreenState extends State<ExplorerProfessionScreen> {
       _professions.removeAt(index);
     });
   }
-
-  void _continue() {
-    // Filtrar profesiones vacías
-    final validProfessions = _professions
-        .where((entry) => entry.profession.isNotEmpty)
-        .map((entry) => entry.profession)
-        .toList();
-    
-    // Navegar a la siguiente pantalla con las profesiones
-    widget.onNavigate('explorer_confirmation', data: validProfessions);
-  }
 }
 
 class ProfessionEntry {
@@ -303,6 +271,13 @@ class ProfessionEntry {
     required this.profession,
     required this.isReady,
   });
+
+  Map<String, dynamic> toJson() {
+    return {
+      'profession': profession,
+      'isReady': isReady,
+    };
+  }
 
   @override
   String toString() {

@@ -1,6 +1,9 @@
 import 'package:buro_app/di/injection.dart';
 import 'package:buro_app/features/modes/explorer/explanation/presentation/screen/explorer_explanation_screen.dart';
+import 'package:buro_app/features/modes/explorer/profession/presentation/screens/explorer_profession_screen.dart';
+import 'package:buro_app/features/modes/explorer/uploadcv/presentation/screens/explorer_cv_success_screen.dart';
 import 'package:buro_app/preferences/app_preferences.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'screens/onboarding_screen.dart';
@@ -12,9 +15,7 @@ import 'screens/already_registered_screen.dart';
 import 'screens/home_screen.dart';
 import 'screens/job_detail_screen.dart';
 import 'features/modes/explorer/welcome/presentation/screens/explorer_welcome_screen.dart';
-import 'screens/explorer_upload_cv_screen.dart';
-import 'screens/explorer_cv_success_screen.dart';
-import 'screens/explorer_profession_screen.dart';
+import 'features/modes/explorer/uploadcv/presentation/screens/explorer_upload_cv_screen.dart';
 import 'screens/explorer_confirmation_screen.dart';
 import 'screens/explorer_contact_screen.dart';
 import 'screens/explorer_success_screen.dart';
@@ -217,138 +218,165 @@ class _AppNavigatorState extends State<AppNavigator> {
 
     switch (_currentScreen) {
       case 'onboarding':
+        printScreenName('OnboardingScreen');
         return OnboardingScreen(onNavigate: navigateTo);
       case 'login':
+        printScreenName('LoginScreen');
         return LoginScreen(onNavigate: navigateTo);
       case 'register':
+        printScreenName('RegisterScreen');
         return RegisterScreen(onNavigate: navigateTo);
       case 'welcome':
+        printScreenName('WelcomeScreen');
         return WelcomeScreen(
           onLogout: handleLogout,
           onModeSelect: handleModeSelection,
         );
       case 'modeExplanation':
+        printScreenName('ModeExplanationScreen');
         return ModeExplanationScreen(
           mode: _selectedMode ?? 'visitante',
           onNavigate: navigateTo,
           onBack: () => navigateTo('welcome'),
         );
       case 'alreadyRegistered':
+        printScreenName('AlreadyRegisteredScreen');
         return AlreadyRegisteredScreen(onNavigate: navigateTo);
       case 'home':
+        printScreenName('HomeScreen');
         return HomeScreen(
           mode: _selectedMode ?? 'visitante',
           onModeChange: handleModeChange,
         );
       // Pantallas para el explorador
       case 'explorer_explanation':
+        printScreenName('ExplorerExplanationScreen');
         return ExplorerExplanationScreen(
           onNavigate: navigateTo,
           onBack: () => navigateTo('welcome'),
         );
       case 'explorer_welcome':
+        printScreenName('ExplorerWelcomeScreen');
         return ExplorerWelcomeScreen(
           onNavigate: navigateTo,
           onBack: () => navigateTo('welcome'),
         );
       case 'explorer_upload_cv':
+        printScreenName('ExplorerUploadCVScreen');
         return ExplorerUploadCVScreen(
           onNavigate: navigateTo,
           onBack: () => navigateTo('explorer_welcome'),
         );
       case 'explorer_cv_success':
-        return ExplorerCVSuccessScreen(
+        printScreenName('ExplorerCVSuccessScreen');
+        return ExplorerCvSuccessScreen(
           onNavigate: navigateTo,
           onBack: () => navigateTo('explorer_upload_cv'),
         );
       // Pantallas para completar el flujo de carga de CV (FLUJO UPLOAD)
       case 'explorer_dashboard':
+        printScreenName('ExplorerProfessionScreen');
         return ExplorerProfessionScreen(
           onNavigate: navigateTo,
           onBack: () => navigateTo('explorer_cv_success'),
         );
       case 'explorer_confirmation':
+        printScreenName('ExplorerConfirmationScreen');
         return ExplorerConfirmationScreen(
           onNavigate: navigateTo,
           onBack: () => navigateTo('explorer_dashboard'),
           professions: _screenData ?? ['Cocinero', 'Electricista'], // Usar las profesiones ingresadas
         );
       case 'explorer_contact':
+        printScreenName('ExplorerContactScreen');
         return ExplorerContactScreen(
           onNavigate: navigateTo,
           onBack: () => navigateTo('explorer_confirmation'),
           cvData: _screenData,
         );
       case 'explorer_success':
+        printScreenName('ExplorerSuccessScreen');
         return ExplorerSuccessScreen(
           onNavigate: navigateTo,
           onBack: () => navigateTo('explorer_contact'),
         );
       case 'explorer_final':
+        printScreenName('ExplorerFinalScreen');
         return ExplorerFinalScreen(
           onNavigate: navigateTo,
           onBack: () => navigateTo('explorer_success'),
         );
       case 'explorer_home':
+        printScreenName('ExplorerHomeScreen');
         return ExplorerHomeScreen(
           onNavigate: navigateTo,
           onBack: () => navigateTo('explorer_final'),
         );
       // Pantallas para generar CV (FLUJO GENERATE)
       case 'explorer_generate_cv':
+        printScreenName('ExplorerGenerateCVWelcomeScreen');
         return ExplorerGenerateCVWelcomeScreen(
           onNavigate: navigateTo,
           onBack: () => navigateTo('explorer_welcome'),
         );
       case 'explorer_generate_cv_info':
+        printScreenName('ExplorerGenerateCVInfoScreen');
         return ExplorerGenerateCVInfoScreen(
           user: _user!,
           onNavigate: navigateTo,
           onBack: () => navigateTo('explorer_generate_cv'),
         );
       case 'explorer_language':
+        printScreenName('ExplorerLanguageScreen');
         return ExplorerLanguageScreen(
           onNavigate: navigateTo,
           onBack: () => navigateTo('explorer_generate_cv_info'),
           cvData: _screenData ?? {},
         );
       case 'explorer_education_question':
+        printScreenName('ExplorerEducationQuestionScreen');
         return ExplorerEducationQuestionScreen(
           onNavigate: navigateTo,
           onBack: () => navigateTo('explorer_language'),
           cvData: _screenData ?? {},
         );
       case 'explorer_education':
+        printScreenName('ExplorerEducationScreen');
         return ExplorerEducationScreen(
           onNavigate: navigateTo,
           onBack: () => navigateTo('explorer_education_question'),
           cvData: _screenData ?? {},
         );
       case 'explorer_personal_info_question':
+        printScreenName('ExplorerPersonalInfoQuestionScreen');
         return ExplorerPersonalInfoQuestionScreen(
           onNavigate: navigateTo,
           onBack: () => navigateTo('explorer_education'),
           cvData: _screenData ?? {},
         );
       case 'explorer_personal_info':
+        printScreenName('ExplorerPersonalInfoScreen');
         return ExplorerPersonalInfoScreen(
           onNavigate: navigateTo,
           onBack: () => navigateTo('explorer_personal_info_question'),
           cvData: _screenData ?? {},
         );
       case 'explorer_photo_question':
+        printScreenName('ExplorerPhotoQuestionScreen');
         return ExplorerPhotoQuestionScreen(
           onNavigate: navigateTo,
           onBack: () => navigateTo('explorer_personal_info'),
           cvData: _screenData ?? {},
         );
       case 'explorer_photo':
+        printScreenName('ExplorerPhotoScreen');
         return ExplorerPhotoScreen(
           onNavigate: navigateTo,
           onBack: () => navigateTo('explorer_photo_question'),
           cvData: _screenData ?? {},
         );
       case 'explorer_cv_summary':
+        printScreenName('ExplorerCVSummaryScreen');
         return ExplorerCVSummaryScreen(
           onNavigate: navigateTo,
           onBack: () => navigateTo('explorer_photo'),
@@ -356,47 +384,55 @@ class _AppNavigatorState extends State<AppNavigator> {
         );
       // Pantallas para datos profesionales (FLUJO GENERATE)
       case 'explorer_professional_welcome':
+        printScreenName('ExplorerProfessionalWelcomeScreen');
         return ExplorerProfessionalWelcomeScreen(
           onNavigate: navigateTo,
           onBack: () => navigateTo('explorer_cv_summary'),
         );
       case 'explorer_profession_input':
+        printScreenName('ExplorerProfessionInputScreen');
         return ExplorerProfessionInputScreen(
           onNavigate: navigateTo,
           onBack: () => navigateTo('explorer_professional_welcome'),
           cvData: _screenData,
         );
       case 'explorer_experience_question':
+        printScreenName('ExplorerExperienceQuestionScreen');
         return ExplorerExperienceQuestionScreen(
           onNavigate: navigateTo,
           onBack: () => navigateTo('explorer_profession_input'),
           cvData: _screenData ?? {},
         );
       case 'explorer_experience':
+        printScreenName('ExplorerExperienceScreen');
         return ExplorerExperienceScreen(
           onNavigate: navigateTo,
           onBack: () => navigateTo('explorer_experience_question'),
           cvData: _screenData ?? {},
         );
       case 'explorer_course_question':
+        printScreenName('ExplorerCourseQuestionScreen');
         return ExplorerCourseQuestionScreen(
           onNavigate: navigateTo,
           onBack: () => navigateTo('explorer_experience_question'),
           cvData: _screenData ?? {},
         );
       case 'explorer_course':
+        printScreenName('ExplorerCourseScreen');
         return ExplorerCourseScreen(
           onNavigate: navigateTo,
           onBack: () => navigateTo('explorer_course_question'),
           cvData: _screenData ?? {},
         );
       case 'explorer_cv_photo_question':
+        printScreenName('ExplorerCVPhotoQuestionScreen');
         return ExplorerCVPhotoQuestionScreen(
           onNavigate: navigateTo,
           onBack: () => navigateTo('explorer_course_question'),
           cvData: _screenData ?? {},
         );
       case 'explorer_cv_photo':
+        printScreenName('ExplorerCVPhotoScreen');
         return ExplorerCVPhotoScreen(
           onNavigate: navigateTo,
           onBack: () => navigateTo('explorer_cv_photo_question'),
@@ -404,18 +440,21 @@ class _AppNavigatorState extends State<AppNavigator> {
         );
       // Pantallas para el resumen profesional y activación (FLUJO GENERATE)
       case 'explorer_professional_summary':
+        printScreenName('ExplorerProfessionalSummaryScreen');
         return ExplorerProfessionalSummaryScreen(
           onNavigate: navigateTo,
           onBack: () => navigateTo('explorer_cv_photo'),
           cvData: _screenData ?? {},
         );
       case 'explorer_cv_completed':
+        printScreenName('ExplorerCVCompletedScreen');
         return ExplorerCVCompletedScreen(
           onNavigate: navigateTo,
           onBack: () => navigateTo('explorer_professional_summary'),
           cvData: _screenData ?? {},
         );
       case 'explorer_activation':
+        printScreenName('ExplorerActivationScreen');
         return ExplorerActivationScreen(
           onNavigate: navigateTo,
           onBack: () => navigateTo('explorer_cv_completed'),
@@ -423,19 +462,28 @@ class _AppNavigatorState extends State<AppNavigator> {
         );
       // Pantallas específicas para el flujo de UPLOAD
       case 'explorer_upload_activation':
+        printScreenName('ExplorerUploadActivationScreen');
         return ExplorerUploadActivationScreen(
           onNavigate: navigateTo,
           onBack: () => navigateTo('explorer_contact'),
           cvData: _screenData ?? {},
         );
       case 'explorer_upload_success':
+        printScreenName('ExplorerUploadSuccessScreen');
         return ExplorerUploadSuccessScreen(
           onNavigate: navigateTo,
           onBack: () => navigateTo('explorer_upload_activation'),
           cvData: _screenData ?? {},
         );
       default:
+        printScreenName('OnboardingScreen');
         return OnboardingScreen(onNavigate: navigateTo);
+    }
+  }
+
+  void printScreenName(String screenName) {
+    if (kDebugMode) {
+      print('********************************Screen: $screenName********************************');
     }
   }
 }
