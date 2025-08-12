@@ -1,4 +1,4 @@
-import 'package:buro_app/features/modes/explorer/profession/presentation/screens/explorer_confirmation_screen_content.dart';
+import 'package:buro_app/features/modes/explorer/profession/presentation/screen/explorer_confirmation_screen_content.dart';
 import 'package:buro_app/shared/action/getgifanimation/presentation/cubit/gif_animation_cubit.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';

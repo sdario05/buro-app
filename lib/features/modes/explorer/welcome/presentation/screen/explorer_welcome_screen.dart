@@ -1,5 +1,5 @@
 import 'package:buro_app/di/injection.dart';
-import 'package:buro_app/features/modes/explorer/welcome/presentation/screens/explorer_welcome_screen_content.dart';
+import 'package:buro_app/features/modes/explorer/welcome/presentation/screen/explorer_welcome_screen_content.dart';
 import 'package:buro_app/shared/action/getgifanimation/presentation/cubit/gif_animation_cubit.dart';
 import 'package:buro_app/shared/cubit/user_name_cubit.dart';
 import 'package:flutter/material.dart';

@@ -1,6 +1,6 @@
 import 'package:buro_app/features/modes/explorer/profession/presentation/cubit/explorer_profession_cubit.dart';
 import 'package:buro_app/features/modes/explorer/profession/presentation/cubit/explorer_profession_states.dart';
-import 'package:buro_app/features/modes/explorer/profession/presentation/screens/explorer_profession_screen_content.dart';
+import 'package:buro_app/features/modes/explorer/profession/presentation/screen/explorer_profession_screen_content.dart';
 import 'package:buro_app/features/modes/explorer/profession/presentation/widget/save_button.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';

@@ -1,4 +1,4 @@
-import 'package:buro_app/features/login/presentation/widgets/login_button.dart';
+import 'package:buro_app/features/login/presentation/widget/login_button.dart';
 import 'package:buro_app/features/login/presentation/cubit/login_cubit.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';

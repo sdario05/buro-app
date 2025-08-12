@@ -2,8 +2,8 @@ import 'package:flutter/material.dart';
 import '../models/job_listing.dart';
 import '../utils/app_styles.dart';
 import '../utils/animations.dart';
-import '../widgets/custom_icons.dart';
-import '../widgets/job_banner.dart';
+import '../widget/custom_icons.dart';
+import '../widget/job_banner.dart';
 import 'job_detail_screen.dart';
 
 class HomeScreen extends StatefulWidget {

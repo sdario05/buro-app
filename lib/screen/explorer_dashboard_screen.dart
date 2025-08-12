@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import '../utils/app_styles.dart';
 import '../models/job_listing.dart';
-import '../widgets/job_banner.dart';
+import '../widget/job_banner.dart';
 
 class ExplorerDashboardScreen extends StatefulWidget {
   final Function(String) onNavigate;

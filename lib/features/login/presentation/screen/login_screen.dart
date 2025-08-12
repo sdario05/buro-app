@@ -1,6 +1,6 @@
 import 'package:buro_app/di/injection.dart';
 import 'package:buro_app/features/login/presentation/cubit/login_cubit.dart';
-import 'package:buro_app/features/login/presentation/screens/login_screen_content.dart';
+import 'package:buro_app/features/login/presentation/screen/login_screen_content.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 

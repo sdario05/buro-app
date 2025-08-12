@@ -2,9 +2,9 @@ import 'package:flutter/material.dart';
 import '../models/job_listing.dart';
 import '../utils/app_styles.dart';
 import '../utils/animations.dart';
-import '../widgets/custom_icons.dart';
+import '../widget/custom_icons.dart';
 // Añadir la importación del widget de registro
-import '../widgets/registration_popup.dart';
+import '../widget/registration_popup.dart';
 
 class JobDetailScreen extends StatefulWidget {
   final JobListing listing;

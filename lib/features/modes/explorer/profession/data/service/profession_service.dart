@@ -1,6 +1,5 @@
 import 'dart:convert';
-
-import 'package:buro_app/features/modes/explorer/profession/presentation/screens/explorer_profession_screen_content.dart';
+import 'package:buro_app/features/modes/explorer/profession/presentation/screen/explorer_profession_screen_content.dart';
 import 'package:http/http.dart' as http;
 
 class ProfessionService {
