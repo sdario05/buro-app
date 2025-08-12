@@ -4,7 +4,11 @@ import 'package:http/http.dart' as http;
 
 class ProfessionService {
   Future<void> sendProfession(List<ProfessionEntry> professions) async {
-
+    print('*********************************');
+    professions.forEach((item) {
+      print(item.profession);
+      print(item.isReady);
+    });
     final url = Uri.parse('https://reqres.in/api/users/2');
     //Aqui tenemos 2 ejemplos de body, uno que envia un body como un objeto de nombre professions que tiene un array de profesiones,
     //y el otro es simplemente un array de profesiones

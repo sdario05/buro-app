@@ -292,7 +292,6 @@ class _AppNavigatorState extends State<AppNavigator> {
         return ExplorerContactScreen(
           onNavigate: navigateTo,
           onBack: () => navigateTo('explorer_confirmation'),
-          cvData: _screenData,
         );
       case 'explorer_success':
         printScreenName('ExplorerSuccessScreen');

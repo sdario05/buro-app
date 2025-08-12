@@ -3,6 +3,11 @@ import 'package:buro_app/features/login/data/service/login_service.dart';
 import 'package:buro_app/features/login/domain/repository/login_repository.dart';
 import 'package:buro_app/features/login/domain/usecase/login_use_case.dart';
 import 'package:buro_app/features/login/presentation/cubit/login_cubit.dart';
+import 'package:buro_app/features/modes/explorer/contact/data/repository/contact_repository_impl.dart';
+import 'package:buro_app/features/modes/explorer/contact/data/service/contact_service.dart';
+import 'package:buro_app/features/modes/explorer/contact/domain/repository/contact_repository.dart';
+import 'package:buro_app/features/modes/explorer/contact/domain/usecase/send_contact_use_case.dart';
+import 'package:buro_app/features/modes/explorer/contact/presentation/cubit/explorer_contact_cubit.dart';
 import 'package:buro_app/features/modes/explorer/profession/data/repository/profession_repository_impl.dart';
 import 'package:buro_app/features/modes/explorer/profession/data/service/profession_service.dart';
 import 'package:buro_app/features/modes/explorer/profession/domain/repository/profession_repository.dart';
@@ -83,5 +88,19 @@ void setupLocator() {
 
   getIt.registerFactory<ExplorerProfessionCubit>(
         () => ExplorerProfessionCubit(getIt<SendProfessionUseCase>()),
+  );
+  //========================================================================
+  getIt.registerLazySingleton<ContactService>(() => ContactService());
+
+  getIt.registerLazySingleton<ContactRepository>(
+        () => ContactRepositoryImpl(getIt<ContactService>()),
+  );
+
+  getIt.registerLazySingleton<SendContactUseCase>(
+        () => SendContactUseCase(getIt<ContactRepository>()),
+  );
+
+  getIt.registerFactory<ExplorerContactCubit>(
+        () => ExplorerContactCubit(getIt<SendContactUseCase>()),
   );
 }

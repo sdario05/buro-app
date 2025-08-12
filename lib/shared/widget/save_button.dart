@@ -3,11 +3,13 @@ import 'package:flutter/material.dart';
 class SaveButton extends StatelessWidget {
   final VoidCallback? onClick;
   final bool isLoading;
+  final String text;
 
   const SaveButton({
     super.key,
     this.onClick,
     this.isLoading = false,
+    required this.text,
   });
 
   @override
@@ -42,9 +44,9 @@ class SaveButton extends StatelessWidget {
                   ),
                 ],
               )
-              : const Text(
-            'Continuar',
-            style: TextStyle(
+              : Text(
+            text,
+            style: const TextStyle(
               fontSize: 16,
               fontWeight: FontWeight.bold,
             ),

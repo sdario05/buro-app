@@ -32,6 +32,10 @@ import 'package:http/http.dart' as http;
 
 class LoginService {
   Future<UserModel> login(String userName, String password) async {
+    print('*********************************');
+    print(userName);
+    print('*********************************');
+    print(password);
     if ((userName == 'germanrepetto@buro.com' && password == 'German12345678')
         || (userName == 'dario' && password == 'dario')
     ) {

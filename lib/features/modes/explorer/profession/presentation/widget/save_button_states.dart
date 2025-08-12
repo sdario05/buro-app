@@ -1,7 +1,7 @@
 import 'package:buro_app/features/modes/explorer/profession/presentation/cubit/explorer_profession_cubit.dart';
 import 'package:buro_app/features/modes/explorer/profession/presentation/cubit/explorer_profession_states.dart';
 import 'package:buro_app/features/modes/explorer/profession/presentation/screen/explorer_profession_screen_content.dart';
-import 'package:buro_app/features/modes/explorer/profession/presentation/widget/save_button.dart';
+import 'package:buro_app/shared/widget/save_button.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -23,6 +23,7 @@ class SaveButtonStates extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    const buttonText = 'Continuar';
     return BlocConsumer<ExplorerProfessionCubit, ExplorerProfessionStates>(
         listener: (context, state) {
           switch (state) {
@@ -40,15 +41,19 @@ class SaveButtonStates extends StatelessWidget {
                       context.read<ExplorerProfessionCubit>().sendProfession(notEmptyProfessions());
                     }
                     : null,
+                text: buttonText,
               );
             }
             case Loading(): {
               return const SaveButton(
                 isLoading: true,
+                text: buttonText,
               );
             }
             case Success(): {
-              return const SaveButton();
+              return const SaveButton(
+                text: buttonText,
+              );
             }
             case Error(): {
               return SaveButton(
@@ -57,9 +62,12 @@ class SaveButtonStates extends StatelessWidget {
                   context.read<ExplorerProfessionCubit>().sendProfession(professions);
                 }
                     : null,
+                text: buttonText,
               );
             }
-            default: return const SaveButton();
+            default: return const SaveButton(
+              text: buttonText,
+            );
           }
         }
     );

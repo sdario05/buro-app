@@ -6,6 +6,8 @@ import 'package:http/http.dart' as http;
 
 class GifAnimationService {
   Future<String> getAnimation(GifType type) async {
+    print('*********************************');
+    print(type.name);
     final url = Uri.parse('https://reqres.in/api/users/2');
     final response = await http.get(
       url,
