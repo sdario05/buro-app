@@ -1,6 +1,6 @@
 import 'package:buro_app/preferences/app_preferences.dart';
-import 'package:buro_app/shared/action/getgifanimation/presentation/cubit/gif_animation_cubit.dart';
-import 'package:buro_app/shared/action/getgifanimation/presentation/cubit/gif_animation_states.dart';
+import 'package:buro_app/shared/action/getImage/presentation/cubit/image_cubit.dart';
+import 'package:buro_app/shared/action/getImage/presentation/cubit/image_states.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -89,10 +89,10 @@ class _ExplorerConfirmationScreenContentState extends State<ExplorerConfirmation
                       const SizedBox(height: 32),
                       
                       // Animation placeholder
-                      BlocBuilder<GifAnimationCubit, GifAnimationStates>(
+                      BlocBuilder<ImageCubit, ImageStates>(
                           builder: (context, state) {
                             switch (state) {
-                              case Success(gif: String gif): {
+                              case Success(model: String model): {
                                 return Container(
                                   width: double.infinity,
                                   height: 200,
@@ -107,11 +107,11 @@ class _ExplorerConfirmationScreenContentState extends State<ExplorerConfirmation
                                   child: ClipRRect(
                                     borderRadius: BorderRadius.circular(8),
                                     child: CachedNetworkImage(
-                                      imageUrl: gif,
+                                      imageUrl: model,
                                       fit: BoxFit.cover,
                                       cacheManager: CacheManager(
                                           Config(
-                                            gif,
+                                            model,
                                             stalePeriod: const Duration(hours: 24),
                                           )
                                       ),

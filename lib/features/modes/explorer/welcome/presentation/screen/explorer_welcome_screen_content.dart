@@ -1,6 +1,7 @@
+import 'package:buro_app/features/login/domain/model/user_model.dart';
 import 'package:buro_app/features/modes/explorer/welcome/presentation/widget/welcome_text.dart';
-import 'package:buro_app/shared/action/getgifanimation/presentation/cubit/gif_animation_cubit.dart';
-import 'package:buro_app/shared/action/getgifanimation/presentation/cubit/gif_animation_states.dart';
+import 'package:buro_app/shared/action/getImage/presentation/cubit/image_cubit.dart';
+import 'package:buro_app/shared/action/getImage/presentation/cubit/image_states.dart';
 import 'package:buro_app/shared/cubit/user_name_cubit.dart';
 import 'package:buro_app/shared/cubit/user_name_states.dart';
 import 'package:cached_network_image/cached_network_image.dart';
@@ -75,8 +76,8 @@ class ExplorerWelcomeScreenContent extends StatelessWidget {
                       BlocBuilder<UserNameCubit, UserNameStates>(
                           builder: (context, state) {
                             switch (state) {
-                              case UserNameSuccess(name: String userName): {
-                                return WelcomeText(name: userName);
+                              case UserNameSuccess(user: UserModel? model): {
+                                return WelcomeText(name: model?.name ?? '');
                               }
                               default: return const WelcomeText();
                             }
@@ -86,10 +87,10 @@ class ExplorerWelcomeScreenContent extends StatelessWidget {
                       const SizedBox(height: 40),
                       
                       // Animation placeholder
-                      BlocBuilder<GifAnimationCubit, GifAnimationStates>(
+                      BlocBuilder<ImageCubit, ImageStates>(
                           builder: (context, state) {
                             switch (state) {
-                              case Success(gif: String gif): {
+                              case Success(model: String model): {
                                 return Container(
                                   width: double.infinity,
                                   height: 200,
@@ -104,11 +105,11 @@ class ExplorerWelcomeScreenContent extends StatelessWidget {
                                   child: ClipRRect(
                                     borderRadius: BorderRadius.circular(8),
                                     child: CachedNetworkImage(
-                                      imageUrl: gif,
+                                      imageUrl: model,
                                       fit: BoxFit.cover,
                                       cacheManager: CacheManager(
                                           Config(
-                                            gif,
+                                            model,
                                             stalePeriod: const Duration(hours: 24),
                                           )
                                       ),

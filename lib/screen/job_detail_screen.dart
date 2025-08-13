@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import '../models/job_listing.dart';
+import '../features/modes/explorer/home/domain/model/job_listing.dart';
 import '../utils/app_styles.dart';
 import '../utils/animations.dart';
 import '../widget/custom_icons.dart';
@@ -272,7 +272,7 @@ class _JobDetailScreenState extends State<JobDetailScreen> with SingleTickerProv
                               // Primera fila de etiquetas
                               Row(
                                 children: [
-                                  _buildTag(widget.listing.title),
+                                  _buildTag(widget.listing.title ?? ''),
                                   const SizedBox(width: 8),
                                   _buildTag(isGenerator ? 'Presencial' : 'Remoto'),
                                   const SizedBox(width: 8),

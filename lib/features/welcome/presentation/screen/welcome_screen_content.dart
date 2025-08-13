@@ -1,3 +1,4 @@
+import 'package:buro_app/features/login/domain/model/user_model.dart';
 import 'package:buro_app/features/welcome/domain/model/carousel_model.dart';
 import 'package:buro_app/features/welcome/presentation/cubit/carousel_cubit.dart';
 import 'package:buro_app/features/welcome/presentation/cubit/carousel_states.dart';
@@ -99,15 +100,15 @@ class _WelcomeScreenContentState extends State<WelcomeScreenContent> {
                   ),
                 ],
               ),
-              SizedBox(height: 24),
+              const SizedBox(height: 24),
 
               // Welcome message
               BlocBuilder<UserNameCubit, UserNameStates>(
                   builder: (context, state) {
                     switch (state) {
-                      case UserNameSuccess(name: String userName): {
+                      case UserNameSuccess(user: UserModel? model): {
                         return Text(
-                            'Bienvenido $userName',
+                            'Bienvenido ${model?.name}',
                             style: const TextStyle(
                               fontSize: 24,
                               fontWeight: FontWeight.bold,
@@ -118,7 +119,7 @@ class _WelcomeScreenContentState extends State<WelcomeScreenContent> {
                     }
                   }
               ),
-              SizedBox(height: 8),
+              const SizedBox(height: 8),
               Text(
                 '¿Con qué modo quieres ingresar hoy?',
                 style: TextStyle(
@@ -126,7 +127,7 @@ class _WelcomeScreenContentState extends State<WelcomeScreenContent> {
                   color: Colors.grey[600],
                 ),
               ),
-              SizedBox(height: 24),
+              const SizedBox(height: 24),
 
               // Carousel for illustrations
               BlocConsumer<CarouselCubit, CarouselStates>(

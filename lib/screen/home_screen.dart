@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import '../models/job_listing.dart';
+import '../features/modes/explorer/home/domain/model/job_listing.dart';
 import '../utils/app_styles.dart';
 import '../utils/animations.dart';
 import '../widget/custom_icons.dart';

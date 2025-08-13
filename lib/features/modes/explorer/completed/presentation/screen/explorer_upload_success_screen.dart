@@ -1,15 +1,15 @@
-import 'package:buro_app/features/modes/explorer/uploadcv/presentation/screen/explorer_cv_success_screen_content.dart';
+import 'package:buro_app/features/modes/explorer/completed/presentation/screen/explorer_upload_success_screen_content.dart';
 import 'package:buro_app/shared/action/getImage/presentation/cubit/image_cubit.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:buro_app/di/injection.dart';
 
-class ExplorerCvSuccessScreen extends StatelessWidget {
+class ExplorerUploadSuccessScreen extends StatelessWidget {
 
   final Function(String) onNavigate;
   final Function() onBack;
 
-  const ExplorerCvSuccessScreen({
+  const ExplorerUploadSuccessScreen({
     super.key,
     required this.onNavigate,
     required this.onBack,
@@ -19,8 +19,8 @@ class ExplorerCvSuccessScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return BlocProvider<ImageCubit>(
       create: (context) => getIt<ImageCubit>()
-        ..getImage(ImageType.explorerCvSuccess),
-      child: ExplorerCVSuccessScreenContent(onNavigate: onNavigate, onBack: onBack),
+        ..getImage(ImageType.explorerCompleted),
+      child: ExplorerUploadSuccessScreenContent(onNavigate: onNavigate, onBack: onBack),
     );
   }
 }

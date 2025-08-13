@@ -10,6 +10,6 @@ class UserNameCubit extends Cubit<UserNameStates> {
     emit(UserNameInitial());
     final prefs = AppPreferences.instance;
     final user = await prefs.getUser();
-    emit(UserNameSuccess(user?.name ?? ""));
+    emit(UserNameSuccess(user));
   }
 }

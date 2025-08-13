@@ -8,6 +8,11 @@ import 'package:buro_app/features/modes/explorer/contact/data/service/contact_se
 import 'package:buro_app/features/modes/explorer/contact/domain/repository/contact_repository.dart';
 import 'package:buro_app/features/modes/explorer/contact/domain/usecase/send_contact_use_case.dart';
 import 'package:buro_app/features/modes/explorer/contact/presentation/cubit/explorer_contact_cubit.dart';
+import 'package:buro_app/features/modes/explorer/home/data/repository/job_repository_impl.dart';
+import 'package:buro_app/features/modes/explorer/home/data/service/job_service.dart';
+import 'package:buro_app/features/modes/explorer/home/domain/repository/job_repository.dart';
+import 'package:buro_app/features/modes/explorer/home/domain/usecase/get_job_use_case.dart';
+import 'package:buro_app/features/modes/explorer/home/presentation/cubit/explorer_job_cubit.dart';
 import 'package:buro_app/features/modes/explorer/profession/data/repository/profession_repository_impl.dart';
 import 'package:buro_app/features/modes/explorer/profession/data/service/profession_service.dart';
 import 'package:buro_app/features/modes/explorer/profession/domain/repository/profession_repository.dart';
@@ -18,11 +23,11 @@ import 'package:buro_app/features/welcome/data/service/carousel_service.dart';
 import 'package:buro_app/features/welcome/domain/repository/carousel_repository.dart';
 import 'package:buro_app/features/welcome/domain/usecase/get_carousel_use_case.dart';
 import 'package:buro_app/features/welcome/presentation/cubit/carousel_cubit.dart';
-import 'package:buro_app/shared/action/getgifanimation/data/repository/gif_animation_repository_impl.dart';
-import 'package:buro_app/shared/action/getgifanimation/data/service/gif_animation_service.dart';
-import 'package:buro_app/shared/action/getgifanimation/domain/repository/gif_animation_repository.dart';
-import 'package:buro_app/shared/action/getgifanimation/domain/usecase/get_gif_animation_use_case.dart';
-import 'package:buro_app/shared/action/getgifanimation/presentation/cubit/gif_animation_cubit.dart';
+import 'package:buro_app/shared/action/getImage/data/repository/image_repository_impl.dart';
+import 'package:buro_app/shared/action/getImage/data/service/image_service.dart';
+import 'package:buro_app/shared/action/getImage/domain/repository/image_repository.dart';
+import 'package:buro_app/shared/action/getImage/domain/usecase/get_image_use_case.dart';
+import 'package:buro_app/shared/action/getImage/presentation/cubit/image_cubit.dart';
 import 'package:buro_app/shared/cubit/user_name_cubit.dart';
 import 'package:get_it/get_it.dart';
 
@@ -62,18 +67,18 @@ void setupLocator() {
         () => UserNameCubit(),
   );
   //========================================================================
-  getIt.registerLazySingleton<GifAnimationService>(() => GifAnimationService());
+  getIt.registerLazySingleton<ImageService>(() => ImageService());
 
-  getIt.registerLazySingleton<GifAnimationRepository>(
-        () => GifAnimationRepositoryImpl(getIt<GifAnimationService>()),
+  getIt.registerLazySingleton<ImageRepository>(
+        () => ImageRepositoryImpl(getIt<ImageService>()),
   );
 
-  getIt.registerLazySingleton<GetGifAnimationUseCase>(
-        () => GetGifAnimationUseCase(getIt<GifAnimationRepository>()),
+  getIt.registerLazySingleton<GetImageUseCase>(
+        () => GetImageUseCase(getIt<ImageRepository>()),
   );
 
-  getIt.registerFactory<GifAnimationCubit>(
-        () => GifAnimationCubit(getIt<GetGifAnimationUseCase>()),
+  getIt.registerFactory<ImageCubit>(
+        () => ImageCubit(getIt<GetImageUseCase>()),
   );
   //========================================================================
   getIt.registerLazySingleton<ProfessionService>(() => ProfessionService());
@@ -102,5 +107,19 @@ void setupLocator() {
 
   getIt.registerFactory<ExplorerContactCubit>(
         () => ExplorerContactCubit(getIt<SendContactUseCase>()),
+  );
+  //========================================================================
+  getIt.registerLazySingleton<JobService>(() => JobService());
+
+  getIt.registerLazySingleton<JobRepository>(
+        () => JobRepositoryImpl(getIt<JobService>()),
+  );
+
+  getIt.registerLazySingleton<GetJobUseCase>(
+        () => GetJobUseCase(getIt<JobRepository>()),
+  );
+
+  getIt.registerFactory<ExplorerJobCubit>(
+        () => ExplorerJobCubit(getIt<GetJobUseCase>()),
   );
 }

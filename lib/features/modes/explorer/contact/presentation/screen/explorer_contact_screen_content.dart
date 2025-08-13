@@ -184,7 +184,7 @@ class _ExplorerContactScreenContentState extends State<ExplorerContactScreenCont
               phone: _phoneController,
               additional: _additionalContacts,
               onSaveSuccess: () {
-                widget.onNavigate('explorer_upload_activation');
+                widget.onNavigate('explorer_upload_success');
               }
             )
           ],

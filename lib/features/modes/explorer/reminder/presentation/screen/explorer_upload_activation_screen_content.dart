@@ -1,15 +1,18 @@
+import 'package:buro_app/shared/action/getImage/presentation/cubit/image_cubit.dart';
+import 'package:buro_app/shared/action/getImage/presentation/cubit/image_states.dart';
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_cache_manager/flutter_cache_manager.dart';
 
-class ExplorerUploadActivationScreen extends StatelessWidget {
-  final Function(String, {dynamic data}) onNavigate;
+class ExplorerUploadActivationScreenContent extends StatelessWidget {
+  final Function(String) onNavigate;
   final Function() onBack;
-  final Map<String, dynamic> cvData;
 
-  const ExplorerUploadActivationScreen({
+  const ExplorerUploadActivationScreenContent({
     Key? key,
     required this.onNavigate,
     required this.onBack,
-    required this.cvData,
   }) : super(key: key);
 
   @override
@@ -122,31 +125,44 @@ class ExplorerUploadActivationScreen extends StatelessWidget {
                       const SizedBox(height: 32),
                       
                       // Illustration container
-                      Container(
-                        width: double.infinity,
-                        height: 150,
-                        decoration: BoxDecoration(
-                          color: Colors.grey[200],
-                          borderRadius: BorderRadius.circular(8),
-                          border: Border.all(
-                            color: Colors.grey[400]!,
-                            width: 2,
-                          ),
-                        ),
-                        child: CustomPaint(
-                          painter: DashedBorderPainter(color: Colors.grey[400]!),
-                          child: const Center(
-                            child: Text(
-                              'ILUSTRACIÓN\nCONVOCATORIA',
-                              textAlign: TextAlign.center,
-                              style: TextStyle(
-                                fontSize: 16,
-                                fontWeight: FontWeight.w500,
-                                color: Colors.black54,
-                              ),
-                            ),
-                          ),
-                        ),
+                      BlocBuilder<ImageCubit, ImageStates>(
+                          builder: (context, state) {
+                            switch (state) {
+                              case Success(model: String model): {
+                                return Container(
+                                  width: double.infinity,
+                                  height: 150,
+                                  decoration: BoxDecoration(
+                                    border: Border.all(
+                                      color: Colors.grey.shade400,
+                                      style: BorderStyle.solid,
+                                      width: 2,
+                                    ),
+                                    borderRadius: BorderRadius.circular(8),
+                                  ),
+                                  child: ClipRRect(
+                                    borderRadius: BorderRadius.circular(8),
+                                    child: CachedNetworkImage(
+                                      imageUrl: model,
+                                      fit: BoxFit.cover,
+                                      cacheManager: CacheManager(
+                                          Config(
+                                            model,
+                                            stalePeriod: const Duration(hours: 24),
+                                          )
+                                      ),
+                                      placeholder: (context, url) =>
+                                      const Center(child: CircularProgressIndicator()),
+                                      errorWidget: (context, url, error) =>
+                                      const Center(child: Icon(Icons.broken_image, color: Colors.grey)),
+                                    ),
+                                  ),
+                                );
+                              }
+                              default:
+                                return const SizedBox(height: 200,);
+                            }
+                          }
                       ),
                       
                       const SizedBox(height: 24),
@@ -174,7 +190,7 @@ class ExplorerUploadActivationScreen extends StatelessWidget {
               child: SizedBox(
                 width: double.infinity,
                 child: ElevatedButton(
-                  onPressed: () => onNavigate('explorer_upload_success', data: cvData),
+                  onPressed: () => onNavigate('explorer_home'),
                   style: ElevatedButton.styleFrom(
                     backgroundColor: Colors.black,
                     foregroundColor: Colors.white,

@@ -20,7 +20,7 @@ import 'features/modes/explorer/profession/presentation/screen/explorer_confirma
 import 'features/modes/explorer/contact/presentation/screen/explorer_contact_screen.dart';
 import 'screen/explorer_success_screen.dart';
 import 'screen/explorer_final_screen.dart';
-import 'screen/explorer_home_screen.dart';
+import 'features/modes/explorer/home/presentation/screen/explorer_home_screen.dart';
 import 'screen/explorer_generate_cv_welcome_screen.dart';
 import 'screen/explorer_generate_cv_info_screen.dart';
 import 'screen/explorer_language_screen.dart';
@@ -43,8 +43,8 @@ import 'screen/explorer_professional_summary_screen.dart';
 import 'screen/explorer_cv_completed_screen.dart';
 import 'screen/explorer_activation_screen.dart';
 import 'models/user.dart';
-import 'screen/explorer_upload_activation_screen.dart';
-import 'screen/explorer_upload_success_screen.dart';
+import 'features/modes/explorer/reminder/presentation/screen/explorer_upload_activation_screen.dart';
+import 'features/modes/explorer/completed/presentation/screen/explorer_upload_success_screen.dart';
 
 void main() {
   WidgetsFlutterBinding.ensureInitialized();
@@ -464,15 +464,13 @@ class _AppNavigatorState extends State<AppNavigator> {
         printScreenName('ExplorerUploadActivationScreen');
         return ExplorerUploadActivationScreen(
           onNavigate: navigateTo,
-          onBack: () => navigateTo('explorer_contact'),
-          cvData: _screenData ?? {},
+          onBack: () => navigateTo('explorer_upload_success'),
         );
       case 'explorer_upload_success':
         printScreenName('ExplorerUploadSuccessScreen');
         return ExplorerUploadSuccessScreen(
           onNavigate: navigateTo,
-          onBack: () => navigateTo('explorer_upload_activation'),
-          cvData: _screenData ?? {},
+          onBack: () => navigateTo('explorer_contact'),
         );
       default:
         printScreenName('OnboardingScreen');

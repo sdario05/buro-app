@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import '../models/job_listing.dart';
+import '../features/modes/explorer/home/domain/model/job_listing.dart';
 import '../utils/app_styles.dart';
 import '../utils/animations.dart';
 import 'custom_icons.dart';
@@ -91,7 +91,7 @@ class JobBanner extends StatelessWidget {
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
                               Text(
-                                listing.name,
+                                listing.name ?? '',
                                 style: const TextStyle(
                                   fontWeight: FontWeight.bold,
                                   fontSize: 16,
@@ -122,7 +122,7 @@ class JobBanner extends StatelessWidget {
                                   ),
                                   Expanded(
                                     child: Text(
-                                      listing.title,
+                                      listing.title ?? '',
                                       style: const TextStyle(
                                         color: AppColors.grey,
                                         fontSize: 14,
@@ -160,7 +160,7 @@ class JobBanner extends StatelessWidget {
                     if (!isSmallScreen) ...[
                       const SizedBox(height: 16),
                       Text(
-                        listing.description,
+                        listing.description ?? '',
                         style: AppStyles.subtitle,
                         maxLines: 2,
                         overflow: TextOverflow.ellipsis,

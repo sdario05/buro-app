@@ -1,56 +1,29 @@
+import 'package:buro_app/features/login/domain/model/user_model.dart';
+import 'package:buro_app/features/modes/explorer/home/domain/model/job_listing.dart';
+import 'package:buro_app/features/modes/explorer/home/presentation/cubit/explorer_job_cubit.dart';
+import 'package:buro_app/features/modes/explorer/home/presentation/cubit/explorer_job_states.dart';
+import 'package:buro_app/shared/cubit/user_name_cubit.dart';
+import 'package:buro_app/shared/cubit/user_name_states.dart';
 import 'package:flutter/material.dart';
-import '../models/job_listing.dart';
-import '../utils/app_styles.dart';
-import '../widget/job_banner.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 
-class ExplorerHomeScreen extends StatefulWidget {
-  final Function(String, {dynamic data}) onNavigate;
-  final Function() onBack;
+class ExplorerHomeScreenContent extends StatefulWidget {
+  final Function(String) onNavigate;
+  final VoidCallback onBack;
 
-  const ExplorerHomeScreen({
+  const ExplorerHomeScreenContent({
     Key? key,
     required this.onNavigate,
     required this.onBack,
   }) : super(key: key);
 
   @override
-  _ExplorerHomeScreenState createState() => _ExplorerHomeScreenState();
+  _ExplorerHomeScreenContentState createState() => _ExplorerHomeScreenContentState();
 }
 
-class _ExplorerHomeScreenState extends State<ExplorerHomeScreen> {
+class _ExplorerHomeScreenContentState extends State<ExplorerHomeScreenContent> {
   final TextEditingController _searchController = TextEditingController();
   String _currentTab = 'disponibles'; // Por defecto muestra empleos disponibles
-  
-  // Datos de ejemplo para empleos disponibles
-  final List<JobListing> _availableJobs = [
-    JobListing(
-      id: '1',
-      name: 'La Cantera BarberShop',
-      title: 'Barbero & Estilista',
-      type: 'generator', // Ofrece empleo
-      description: 'Buscamos un Barbero Estilista con experiencia en cortes modernos y clásicos.',
-      location: 'Buenos Aires',
-      salary: '\$150,000 - \$200,000',
-    ),
-    JobListing(
-      id: '2',
-      name: 'Mi sabor',
-      title: 'Cocinero',
-      type: 'generator', // Ofrece empleo
-      description: 'Se busca un cocinero para nuestra tienda de empanadas en Villa Crespo.',
-      location: 'CABA',
-      salary: '\$600,000 - \$700,000',
-    ),
-    JobListing(
-      id: '3',
-      name: 'Café del Centro',
-      title: 'Barista',
-      type: 'generator', // Ofrece empleo
-      description: 'Buscamos barista con experiencia para café de especialidad.',
-      location: 'Córdoba',
-      salary: '\$180,000 - \$220,000',
-    ),
-  ];
   
   // Datos de ejemplo para empleos guardados
   final List<JobListing> _savedJobs = [
@@ -97,6 +70,9 @@ class _ExplorerHomeScreenState extends State<ExplorerHomeScreen> {
                       ),
                       child: TextField(
                         controller: _searchController,
+                        onChanged: (value) {
+
+                        },
                         decoration: InputDecoration(
                           hintText: 'Buscar',
                           hintStyle: TextStyle(color: Colors.grey[600]),
@@ -110,17 +86,36 @@ class _ExplorerHomeScreenState extends State<ExplorerHomeScreen> {
                   
                   const SizedBox(width: 12),
                   
-                  // Perfil
-                  CircleAvatar(
-                    backgroundColor: Colors.grey[300],
-                    radius: 20,
-                    child: const Text(
-                      'GR',
-                      style: TextStyle(
-                        color: Colors.black,
-                        fontWeight: FontWeight.bold,
-                      ),
-                    ),
+                  //Perfil
+                  BlocBuilder<UserNameCubit, UserNameStates>(
+                    builder: (context, state) {
+                      switch (state) {
+                        case UserNameSuccess(user: UserModel? model): {
+                          return CircleAvatar(
+                            backgroundColor: Colors.grey[300],
+                            radius: 20,
+                            child: Text(
+                              '${model?.name[0] ?? ''}${model?.lastName[0] ?? ''}',
+                              style: const TextStyle(
+                                color: Colors.black,
+                                fontWeight: FontWeight.bold,
+                              ),
+                            ),
+                          );
+                        }
+                        default: return CircleAvatar(
+                          backgroundColor: Colors.grey[300],
+                          radius: 20,
+                          child: const Text(
+                            '',
+                            style: TextStyle(
+                              color: Colors.black,
+                              fontWeight: FontWeight.bold,
+                            ),
+                          ),
+                        );
+                      }
+                    }
                   ),
                 ],
               ),
@@ -271,12 +266,37 @@ class _ExplorerHomeScreenState extends State<ExplorerHomeScreen> {
   }
 
   Widget _buildAvailableJobsContent() {
-    return Column(
-      children: [
-        // Placeholder boxes for job listings
-        for (var job in _availableJobs)
-          _buildJobPlaceholder(job),
-      ],
+    return BlocBuilder<ExplorerJobCubit, ExplorerJobStates>(
+      builder: (context, state) {
+        switch (state) {
+          case Success(model: List<JobListing> model): {
+            return Column(
+              children: [
+                // Placeholder boxes for job listings
+                for (var job in model) _buildJobPlaceholder(job)
+              ],
+            );
+          }
+          case Error(message: String model): {
+            return SizedBox(
+              width: double.infinity,
+              height: 200,
+              child: Center(
+                child: Text(
+                  model,
+                  textAlign: TextAlign.center,
+                  style: const TextStyle(fontSize: 16),
+                )
+              ),
+            );
+          }
+          default: return const SizedBox(
+            width: double.infinity,
+            height: 200,
+            child: Center(child: CircularProgressIndicator()),
+          );
+        }
+      }
     );
   }
 
@@ -381,7 +401,7 @@ class _ExplorerHomeScreenState extends State<ExplorerHomeScreen> {
                   ),
                   child: Center(
                     child: Text(
-                      job.name.substring(0, 1),
+                      job.name?.substring(0, 1) ?? '',
                       style: const TextStyle(
                         fontSize: 20,
                         fontWeight: FontWeight.bold,
@@ -398,14 +418,14 @@ class _ExplorerHomeScreenState extends State<ExplorerHomeScreen> {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Text(
-                        job.name,
+                        job.name ?? '',
                         style: const TextStyle(
                           fontSize: 16,
                           fontWeight: FontWeight.bold,
                         ),
                       ),
                       Text(
-                        job.title,
+                        job.title ?? '',
                         style: TextStyle(
                           fontSize: 14,
                           color: Colors.grey[600],
@@ -447,7 +467,7 @@ class _ExplorerHomeScreenState extends State<ExplorerHomeScreen> {
               children: [
                 // Description
                 Text(
-                  job.description,
+                  job.description ?? '',
                   style: const TextStyle(
                     fontSize: 14,
                     height: 1.5,
