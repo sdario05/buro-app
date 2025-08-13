@@ -71,7 +71,7 @@ class _ExplorerHomeScreenContentState extends State<ExplorerHomeScreenContent> {
                       child: TextField(
                         controller: _searchController,
                         onChanged: (value) {
-
+                          _searchJobs(context);
                         },
                         decoration: InputDecoration(
                           hintText: 'Buscar',
@@ -532,5 +532,9 @@ class _ExplorerHomeScreenContentState extends State<ExplorerHomeScreenContent> {
         ],
       ),
     );
+  }
+
+  void _searchJobs(BuildContext context) {
+    context.read<ExplorerJobCubit>().searchJobs(_searchController.text);
   }
 }
