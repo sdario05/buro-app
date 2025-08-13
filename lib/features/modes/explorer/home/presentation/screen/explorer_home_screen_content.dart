@@ -46,159 +46,165 @@ class _ExplorerHomeScreenContentState extends State<ExplorerHomeScreenContent> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      backgroundColor: Colors.grey[200], // Fondo gris claro como en la imagen
-      body: SafeArea(
-        child: Column(
-          children: [
-            // Header with search and profile
-            Container(
-              padding: const EdgeInsets.all(16.0),
-              decoration: const BoxDecoration(
-                color: Colors.white,
-              ),
-              child: Row(
-                children: [
-                  // Buscador
-                  Expanded(
-                    child: Container(
-                      height: 44,
-                      decoration: BoxDecoration(
-                        color: Colors.white,
-                        border: Border.all(color: Colors.grey[300]!),
-                        borderRadius: BorderRadius.circular(4),
-                      ),
-                      child: TextField(
-                        controller: _searchController,
-                        onChanged: (value) {
-                          _searchJobs(context);
-                        },
-                        decoration: InputDecoration(
-                          hintText: 'Buscar',
-                          hintStyle: TextStyle(color: Colors.grey[600]),
-                          prefixIcon: Icon(Icons.search, color: Colors.grey[600]),
-                          border: InputBorder.none,
-                          contentPadding: const EdgeInsets.symmetric(vertical: 12),
+    return WillPopScope(
+      onWillPop: () async {
+        widget.onBack();
+        return false;
+      },
+      child: Scaffold(
+        backgroundColor: Colors.grey[200], // Fondo gris claro como en la imagen
+        body: SafeArea(
+          child: Column(
+            children: [
+              // Header with search and profile
+              Container(
+                padding: const EdgeInsets.all(16.0),
+                decoration: const BoxDecoration(
+                  color: Colors.white,
+                ),
+                child: Row(
+                  children: [
+                    // Buscador
+                    Expanded(
+                      child: Container(
+                        height: 44,
+                        decoration: BoxDecoration(
+                          color: Colors.white,
+                          border: Border.all(color: Colors.grey[300]!),
+                          borderRadius: BorderRadius.circular(4),
+                        ),
+                        child: TextField(
+                          controller: _searchController,
+                          onChanged: (value) {
+                            _searchJobs(context);
+                          },
+                          decoration: InputDecoration(
+                            hintText: 'Buscar',
+                            hintStyle: TextStyle(color: Colors.grey[600]),
+                            prefixIcon: Icon(Icons.search, color: Colors.grey[600]),
+                            border: InputBorder.none,
+                            contentPadding: const EdgeInsets.symmetric(vertical: 12),
+                          ),
                         ),
                       ),
                     ),
-                  ),
-                  
-                  const SizedBox(width: 12),
-                  
-                  //Perfil
-                  BlocBuilder<UserNameCubit, UserNameStates>(
-                    builder: (context, state) {
-                      switch (state) {
-                        case UserNameSuccess(user: UserModel? model): {
-                          return CircleAvatar(
+
+                    const SizedBox(width: 12),
+
+                    //Perfil
+                    BlocBuilder<UserNameCubit, UserNameStates>(
+                      builder: (context, state) {
+                        switch (state) {
+                          case UserNameSuccess(user: UserModel? model): {
+                            return CircleAvatar(
+                              backgroundColor: Colors.grey[300],
+                              radius: 20,
+                              child: Text(
+                                '${model?.name[0] ?? ''}${model?.lastName[0] ?? ''}',
+                                style: const TextStyle(
+                                  color: Colors.black,
+                                  fontWeight: FontWeight.bold,
+                                ),
+                              ),
+                            );
+                          }
+                          default: return CircleAvatar(
                             backgroundColor: Colors.grey[300],
                             radius: 20,
-                            child: Text(
-                              '${model?.name[0] ?? ''}${model?.lastName[0] ?? ''}',
-                              style: const TextStyle(
+                            child: const Text(
+                              '',
+                              style: TextStyle(
                                 color: Colors.black,
                                 fontWeight: FontWeight.bold,
                               ),
                             ),
                           );
                         }
-                        default: return CircleAvatar(
-                          backgroundColor: Colors.grey[300],
-                          radius: 20,
-                          child: const Text(
-                            '',
-                            style: TextStyle(
-                              color: Colors.black,
-                              fontWeight: FontWeight.bold,
-                            ),
-                          ),
-                        );
                       }
-                    }
-                  ),
-                ],
-              ),
-            ),
-            
-            // Main content
-            Expanded(
-              child: SingleChildScrollView(
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    // Título y subtítulo
-                    Padding(
-                      padding: const EdgeInsets.all(16.0),
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.center,
-                        children: [
-                          const Text(
-                            'Hechá un vistazo al portal de novedades',
-                            textAlign: TextAlign.center,
-                            style: TextStyle(
-                              fontSize: 24,
-                              fontWeight: FontWeight.bold,
-                            ),
-                          ),
-                          const SizedBox(height: 8),
-                          RichText(
-                            textAlign: TextAlign.center,
-                            text: TextSpan(
-                              style: TextStyle(
-                                fontSize: 14,
-                                color: Colors.grey[800],
-                              ),
-                              children: const [
-                                TextSpan(text: 'Recordá que al estar en "'),
-                                TextSpan(
-                                  text: 'modo explorador de empleos',
-                                  style: TextStyle(fontWeight: FontWeight.bold),
-                                ),
-                                TextSpan(text: '" tu visualidad está destinada a explorador futuros empleos.'),
-                              ],
-                            ),
-                          ),
-                        ],
-                      ),
                     ),
-                    
-                    // Contenido según la pestaña seleccionada
-                    _buildTabContent(),
                   ],
                 ),
               ),
-            ),
-            
-            // Bottom navigation
-            Container(
-              padding: const EdgeInsets.symmetric(vertical: 8.0, horizontal: 4.0),
-              decoration: BoxDecoration(
-                color: Colors.white,
-                boxShadow: [
-                  BoxShadow(
-                    color: Colors.black.withOpacity(0.05),
-                    offset: const Offset(0, -2),
-                    blurRadius: 8,
+
+              // Main content
+              Expanded(
+                child: SingleChildScrollView(
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      // Título y subtítulo
+                      Padding(
+                        padding: const EdgeInsets.all(16.0),
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.center,
+                          children: [
+                            const Text(
+                              'Hechá un vistazo al portal de novedades',
+                              textAlign: TextAlign.center,
+                              style: TextStyle(
+                                fontSize: 24,
+                                fontWeight: FontWeight.bold,
+                              ),
+                            ),
+                            const SizedBox(height: 8),
+                            RichText(
+                              textAlign: TextAlign.center,
+                              text: TextSpan(
+                                style: TextStyle(
+                                  fontSize: 14,
+                                  color: Colors.grey[800],
+                                ),
+                                children: const [
+                                  TextSpan(text: 'Recordá que al estar en "'),
+                                  TextSpan(
+                                    text: 'modo explorador de empleos',
+                                    style: TextStyle(fontWeight: FontWeight.bold),
+                                  ),
+                                  TextSpan(text: '" tu visualidad está destinada a explorador futuros empleos.'),
+                                ],
+                              ),
+                            ),
+                          ],
+                        ),
+                      ),
+
+                      // Contenido según la pestaña seleccionada
+                      _buildTabContent(),
+                    ],
                   ),
-                ],
-                borderRadius: const BorderRadius.only(
-                  topLeft: Radius.circular(20),
-                  topRight: Radius.circular(20),
                 ),
               ),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                children: [
-                  _buildNavButton('disponibles', 'Empleos\ndisponibles'),
-                  _buildNavButton('guardados', 'Empleos\nguardados'),
-                  _buildNavButton('convocatoria', 'Iniciar\nconvocatoria'),
-                  _buildNavButton('misConvocatorias', 'Mis\nconvocatorias'),
-                  _buildNavButton('cambiarModo', 'Cambiar\nde modo'),
-                ],
+
+              // Bottom navigation
+              Container(
+                padding: const EdgeInsets.symmetric(vertical: 8.0, horizontal: 4.0),
+                decoration: BoxDecoration(
+                  color: Colors.white,
+                  boxShadow: [
+                    BoxShadow(
+                      color: Colors.black.withOpacity(0.05),
+                      offset: const Offset(0, -2),
+                      blurRadius: 8,
+                    ),
+                  ],
+                  borderRadius: const BorderRadius.only(
+                    topLeft: Radius.circular(20),
+                    topRight: Radius.circular(20),
+                  ),
+                ),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                  children: [
+                    _buildNavButton('disponibles', 'Empleos\ndisponibles'),
+                    _buildNavButton('guardados', 'Empleos\nguardados'),
+                    _buildNavButton('convocatoria', 'Iniciar\nconvocatoria'),
+                    _buildNavButton('misConvocatorias', 'Mis\nconvocatorias'),
+                    _buildNavButton('cambiarModo', 'Cambiar\nde modo'),
+                  ],
+                ),
               ),
-            ),
-          ],
+            ],
+          ),
         ),
       ),
     );

@@ -259,7 +259,7 @@ class _AppNavigatorState extends State<AppNavigator> {
         printScreenName('ExplorerWelcomeScreen');
         return ExplorerWelcomeScreen(
           onNavigate: navigateTo,
-          onBack: () => navigateTo('welcome'),
+          onBack: () => navigateTo('explorer_explanation'),
         );
       case 'explorer_upload_cv':
         printScreenName('ExplorerUploadCVScreen');

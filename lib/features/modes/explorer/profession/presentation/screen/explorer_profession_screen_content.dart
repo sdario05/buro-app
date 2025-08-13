@@ -1,5 +1,6 @@
 import 'package:buro_app/features/modes/explorer/profession/presentation/widget/save_button_states.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 
 class ExplorerProfessionScreenContent extends StatefulWidget {
   final Function(String, {dynamic data}) onNavigate;
@@ -20,112 +21,120 @@ class _ExplorerProfessionScreenContentState extends State<ExplorerProfessionScre
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      backgroundColor: const Color(0xFFEEEEEE), // Fondo gris claro
-      body: SafeArea(
-        child: Column(
-          children: [
-            // Header with logo and navigation buttons
-            Padding(
-              padding: const EdgeInsets.all(16.0),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  // Back button
-                  IconButton(
-                    icon: const Icon(Icons.arrow_back),
-                    onPressed: widget.onBack,
-                    padding: EdgeInsets.zero,
-                    constraints: const BoxConstraints(),
-                  ),
-                  
-                  // Logo
-                  const Text(
-                    'Logo',
-                    style: TextStyle(
-                      fontSize: 18,
-                      fontWeight: FontWeight.bold,
+    return WillPopScope(
+      onWillPop: () async {
+        widget.onBack();
+        return false;
+      },
+      child: Scaffold(
+        backgroundColor: const Color(0xFFEEEEEE), // Fondo gris claro
+        body: SafeArea(
+          child: Column(
+            children: [
+              // Header with logo and navigation buttons
+              Padding(
+                padding: const EdgeInsets.all(16.0),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    // Back button
+                    IconButton(
+                      icon: const Icon(Icons.arrow_back),
+                      onPressed: widget.onBack,
+                      padding: EdgeInsets.zero,
+                      constraints: const BoxConstraints(),
                     ),
-                  ),
-                  
-                  // Close button
-                  IconButton(
-                    icon: const Icon(Icons.close),
-                    onPressed: widget.onBack,
-                    padding: EdgeInsets.zero,
-                    constraints: const BoxConstraints(),
-                  ),
-                ],
+
+                    // Logo
+                    const Text(
+                      'Logo',
+                      style: TextStyle(
+                        fontSize: 18,
+                        fontWeight: FontWeight.bold,
+                      ),
+                    ),
+
+                    // Close button
+                    IconButton(
+                      icon: const Icon(Icons.close),
+                      onPressed: () {
+                        SystemNavigator.pop();
+                      },
+                      padding: EdgeInsets.zero,
+                      constraints: const BoxConstraints(),
+                    ),
+                  ],
+                ),
               ),
-            ),
-            
-            // Main content
-            Expanded(
-              child: SingleChildScrollView(
-                child: Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 24.0),
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      const SizedBox(height: 16),
-                      
-                      // Title
-                      const Text(
-                        '¡Ya casi! Nos faltan solo dos pasos:',
-                        textAlign: TextAlign.center,
-                        style: TextStyle(
-                          fontSize: 24,
-                          fontWeight: FontWeight.bold,
-                          height: 1.2,
+
+              // Main content
+              Expanded(
+                child: SingleChildScrollView(
+                  child: Padding(
+                    padding: const EdgeInsets.symmetric(horizontal: 24.0),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        const SizedBox(height: 16),
+
+                        // Title
+                        const Text(
+                          '¡Ya casi! Nos faltan solo dos pasos:',
+                          textAlign: TextAlign.center,
+                          style: TextStyle(
+                            fontSize: 24,
+                            fontWeight: FontWeight.bold,
+                            height: 1.2,
+                          ),
                         ),
-                      ),
-                      
-                      const SizedBox(height: 16),
-                      
-                      // Subtitle
-                      Text(
-                        'Ahora te vamos a pedir que ingreses tu profesión o rubro profesional. Tené en cuenta que para comenzar a tener propuestas tenés que tener marcada la opción: "Listo para conseguir trabajo".',
-                        textAlign: TextAlign.center,
-                        style: TextStyle(
-                          fontSize: 14,
-                          color: Colors.grey[800],
-                          height: 1.4,
+
+                        const SizedBox(height: 16),
+
+                        // Subtitle
+                        Text(
+                          'Ahora te vamos a pedir que ingreses tu profesión o rubro profesional. Tené en cuenta que para comenzar a tener propuestas tenés que tener marcada la opción: "Listo para conseguir trabajo".',
+                          textAlign: TextAlign.center,
+                          style: TextStyle(
+                            fontSize: 14,
+                            color: Colors.grey[800],
+                            height: 1.4,
+                          ),
                         ),
-                      ),
-                      
-                      const SizedBox(height: 32),
-                      
-                      // Profession entries
-                      ...List.generate(_professions.length, (index) {
-                        return _buildProfessionEntry(index);
-                      }),
-                      
-                      // Add another profession button
-                      TextButton.icon(
-                        onPressed: _addProfession,
-                        icon: const Icon(Icons.add, size: 20),
-                        label: const Text('Quiero agregar otra profesión más'),
-                        style: TextButton.styleFrom(
-                          padding: const EdgeInsets.symmetric(vertical: 12),
-                          alignment: Alignment.centerLeft,
+
+                        const SizedBox(height: 32),
+
+                        // Profession entries
+                        ...List.generate(_professions.length, (index) {
+                          return _buildProfessionEntry(index);
+                        }),
+
+                        // Add another profession button
+                        TextButton.icon(
+                          onPressed: _addProfession,
+                          icon: const Icon(Icons.add, size: 20),
+                          label: const Text('Quiero agregar otra profesión más'),
+                          style: TextButton.styleFrom(
+                            padding: const EdgeInsets.symmetric(vertical: 12),
+                            alignment: Alignment.centerLeft,
+                          ),
                         ),
-                      ),
-                      
-                      const SizedBox(height: 32),
-                    ],
+
+                        const SizedBox(height: 32),
+                      ],
+                    ),
                   ),
                 ),
               ),
-            ),
 
-            // Continue button
-            SaveButtonStates(
-              professions: _professions,
-              onSaveSuccess: (professions) {
-                widget.onNavigate('explorer_confirmation', data: professions);
-              },
-            ),
-          ],
+              // Continue button
+              SaveButtonStates(
+                professions: _professions,
+                onSaveSuccess: (professions) {
+                  widget.onNavigate('explorer_confirmation', data: professions);
+                },
+              ),
+            ],
+          ),
         ),
       ),
     );
