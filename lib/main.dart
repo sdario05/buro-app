@@ -263,7 +263,7 @@ class _AppNavigatorState extends State<AppNavigator> {
         );
       case 'explorer_upload_cv':
         printScreenName('ExplorerUploadCVScreen');
-        return ExplorerUploadCVScreen(
+        return ExplorerUploadCvScreen(
           onNavigate: navigateTo,
           onBack: () => navigateTo('explorer_welcome'),
         );

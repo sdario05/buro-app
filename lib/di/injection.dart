@@ -18,6 +18,11 @@ import 'package:buro_app/features/modes/explorer/profession/data/service/profess
 import 'package:buro_app/features/modes/explorer/profession/domain/repository/profession_repository.dart';
 import 'package:buro_app/features/modes/explorer/profession/domain/usecase/send_profession_use_case.dart';
 import 'package:buro_app/features/modes/explorer/profession/presentation/cubit/explorer_profession_cubit.dart';
+import 'package:buro_app/features/modes/explorer/uploadcv/data/repository/cv_repository_impl.dart';
+import 'package:buro_app/features/modes/explorer/uploadcv/data/service/cv_service.dart';
+import 'package:buro_app/features/modes/explorer/uploadcv/domain/repository/cv_repository.dart';
+import 'package:buro_app/features/modes/explorer/uploadcv/domain/usecase/send_cv_use_case.dart';
+import 'package:buro_app/features/modes/explorer/uploadcv/presentation/cubit/cv_cubit.dart';
 import 'package:buro_app/features/welcome/data/repository/carousel_repository.dart';
 import 'package:buro_app/features/welcome/data/service/carousel_service.dart';
 import 'package:buro_app/features/welcome/domain/repository/carousel_repository.dart';
@@ -121,5 +126,19 @@ void setupLocator() {
 
   getIt.registerFactory<ExplorerJobCubit>(
         () => ExplorerJobCubit(getIt<GetJobUseCase>()),
+  );
+  //========================================================================
+  getIt.registerLazySingleton<CvService>(() => CvService());
+
+  getIt.registerLazySingleton<CvRepository>(
+        () => CvRepositoryImpl(getIt<CvService>()),
+  );
+
+  getIt.registerLazySingleton<SendCvUseCase>(
+        () => SendCvUseCase(getIt<CvRepository>()),
+  );
+
+  getIt.registerFactory<CvCubit>(
+        () => CvCubit(getIt<SendCvUseCase>()),
   );
 }
