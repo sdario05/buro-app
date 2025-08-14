@@ -34,13 +34,16 @@ import 'package:buro_app/shared/action/getImage/domain/repository/image_reposito
 import 'package:buro_app/shared/action/getImage/domain/usecase/get_image_use_case.dart';
 import 'package:buro_app/shared/action/getImage/presentation/cubit/image_cubit.dart';
 import 'package:buro_app/shared/cubit/user_name_cubit.dart';
+import 'package:dio/dio.dart';
 import 'package:get_it/get_it.dart';
 
 final getIt = GetIt.instance;
 
 void setupLocator() {
-
-  getIt.registerLazySingleton<LoginService>(() => LoginService());
+  // Registrar Dio primero
+  getIt.registerLazySingleton<Dio>(() => Dio());
+  //========================================================================
+  getIt.registerLazySingleton<LoginService>(() => LoginService(getIt<Dio>()));
 
   getIt.registerLazySingleton<LoginRepository>(
         () => LoginRepositoryImpl(getIt<LoginService>()),
