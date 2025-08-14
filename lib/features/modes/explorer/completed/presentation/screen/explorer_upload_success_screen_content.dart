@@ -15,6 +15,9 @@ class ExplorerUploadSuccessScreenContent extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    print('**********************************');
+    print('Pantalla: $runtimeType');
+    print('**********************************');
     return WillPopScope(
       onWillPop: () async {
         context.pop();
@@ -34,7 +37,7 @@ class ExplorerUploadSuccessScreenContent extends StatelessWidget {
                     // Back button
                     IconButton(
                       icon: const Icon(Icons.arrow_back),
-                      onPressed: () => context.pop,
+                      onPressed: () => context.pop(),
                       padding: EdgeInsets.zero,
                       constraints: const BoxConstraints(),
                     ),

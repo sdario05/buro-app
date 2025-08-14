@@ -32,7 +32,7 @@ class SaveButtonStates extends StatelessWidget {
         },
         builder: (context, state) {
           switch (state) {
-            case Initial(): {
+            case Initial() || Error() || Success(): {
               return SaveButton(
                 onClick: () {
                   _validateAndSend(context);
@@ -43,19 +43,6 @@ class SaveButtonStates extends StatelessWidget {
             case Loading(): {
               return const SaveButton(
                 isLoading: true,
-                text: buttonText,
-              );
-            }
-            case Success(): {
-              return const SaveButton(
-                text: buttonText,
-              );
-            }
-            case Error(): {
-              return SaveButton(
-                onClick: () {
-                  _validateAndSend(context);
-                },
                 text: buttonText,
               );
             }
@@ -79,11 +66,27 @@ class SaveButtonStates extends StatelessWidget {
       );
       return;
     }
+    if (email.text.isNotEmpty && !_isEmailValid(email.text)) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(
+          content: Text('El email es inválido.'),
+          backgroundColor: Colors.red,
+        ),
+      );
+      return;
+    }
 
     context.read<ExplorerContactCubit>().sendContacts(ContactModel(
       email: email.text,
       phone: phone.text,
       additional: additional
     ));
+  }
+
+  bool _isEmailValid(String email) {
+    final emailRegExp = RegExp(
+      r'^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$',
+    );
+    return emailRegExp.hasMatch(email);
   }
 }

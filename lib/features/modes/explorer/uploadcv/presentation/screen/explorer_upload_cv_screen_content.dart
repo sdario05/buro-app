@@ -48,6 +48,14 @@ class _ExplorerUploadCVScreenContentState extends State<ExplorerUploadCVScreenCo
   }
 
   @override
+  void initState() {
+    super.initState();
+    print('**********************************');
+    print('Pantalla: $runtimeType');
+    print('**********************************');
+  }
+
+  @override
   Widget build(BuildContext context) {
     return WillPopScope(
       onWillPop: () async {
@@ -68,7 +76,7 @@ class _ExplorerUploadCVScreenContentState extends State<ExplorerUploadCVScreenCo
                     // Back button
                     IconButton(
                       icon: const Icon(Icons.arrow_back),
-                      onPressed: () => context.pop,
+                      onPressed: () => context.pop(),
                       padding: EdgeInsets.zero,
                       constraints: const BoxConstraints(),
                     ),

@@ -5,8 +5,8 @@ import 'package:buro_app/features/modes/explorer/home/presentation/cubit/explore
 import 'package:buro_app/shared/cubit/user_name_cubit.dart';
 import 'package:buro_app/shared/cubit/user_name_states.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:go_router/go_router.dart';
 
 class ExplorerHomeScreenContent extends StatefulWidget {
 
@@ -36,6 +36,14 @@ class _ExplorerHomeScreenContentState extends State<ExplorerHomeScreenContent> {
   ];
 
   @override
+  void initState() {
+    super.initState();
+    print('**********************************');
+    print('Pantalla: $runtimeType');
+    print('**********************************');
+  }
+
+  @override
   void dispose() {
     _searchController.dispose();
     super.dispose();
@@ -45,7 +53,7 @@ class _ExplorerHomeScreenContentState extends State<ExplorerHomeScreenContent> {
   Widget build(BuildContext context) {
     return WillPopScope(
       onWillPop: () async {
-        context.pop();
+        SystemNavigator.pop();
         return false;
       },
       child: Scaffold(

@@ -30,6 +30,9 @@ class _WelcomeScreenContentState extends State<WelcomeScreenContent> {
   void initState() {
     super.initState();
     _pageController = PageController(initialPage: 0);
+    print('**********************************');
+    print('Pantalla: $runtimeType');
+    print('**********************************');
   }
 
   @override
@@ -284,7 +287,10 @@ class _WelcomeScreenContentState extends State<WelcomeScreenContent> {
     Future.delayed(const Duration(milliseconds: 100), () async {
       final prefs = AppPreferences.instance;
       await prefs.clearUser();
-      context.goNamed('onboarding');
+      await prefs.clearExplorerCompleted();
+      if (mounted) {
+        context.goNamed('onboarding');
+      }
     });
   }
 }

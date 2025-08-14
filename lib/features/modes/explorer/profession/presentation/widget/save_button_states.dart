@@ -34,7 +34,7 @@ class SaveButtonStates extends StatelessWidget {
         },
         builder: (context, state) {
           switch (state) {
-            case Initial(): {
+            case Initial() || Error() || Success(): {
               return SaveButton(
                 onClick: _canSend
                     ? () {
@@ -47,21 +47,6 @@ class SaveButtonStates extends StatelessWidget {
             case Loading(): {
               return const SaveButton(
                 isLoading: true,
-                text: buttonText,
-              );
-            }
-            case Success(): {
-              return const SaveButton(
-                text: buttonText,
-              );
-            }
-            case Error(): {
-              return SaveButton(
-                onClick: _canSend
-                    ? () {
-                  context.read<ExplorerProfessionCubit>().sendProfession(professions);
-                }
-                    : null,
                 text: buttonText,
               );
             }

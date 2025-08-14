@@ -21,6 +21,14 @@ class _LoginScreenContentState extends State<LoginScreenContent> {
   String? _errorMessage;
 
   @override
+  void initState() {
+    super.initState();
+    print('**********************************');
+    print('Pantalla: $runtimeType');
+    print('**********************************');
+  }
+
+  @override
   void dispose() {
     _emailController.dispose();
     _passwordController.dispose();

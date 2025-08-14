@@ -1,4 +1,3 @@
-import 'package:buro_app/core/navigation/app_router.dart';
 import 'package:buro_app/shared/action/getImage/presentation/cubit/image_cubit.dart';
 import 'package:buro_app/shared/action/getImage/presentation/cubit/image_states.dart';
 import 'package:cached_network_image/cached_network_image.dart';
@@ -16,6 +15,9 @@ class ExplorerCVSuccessScreenContent extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    print('**********************************');
+    print('Pantalla: $runtimeType');
+    print('**********************************');
     return WillPopScope(
       onWillPop: () async {
         context.pop();
@@ -35,7 +37,7 @@ class ExplorerCVSuccessScreenContent extends StatelessWidget {
                     // Back button
                     IconButton(
                       icon: const Icon(Icons.arrow_back),
-                      onPressed: () => context.pop,
+                      onPressed: () => context.pop(),
                       padding: EdgeInsets.zero,
                       constraints: const BoxConstraints(),
                     ),

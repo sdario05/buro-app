@@ -19,6 +19,9 @@ class ExplorerWelcomeScreenContent extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    print('**********************************');
+    print('Pantalla: $runtimeType');
+    print('**********************************');
     final screenSize = MediaQuery.of(context).size;
     final isSmallScreen = screenSize.height < 700;
 

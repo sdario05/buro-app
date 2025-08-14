@@ -24,6 +24,14 @@ class _ExplorerConfirmationScreenContentState extends State<ExplorerConfirmation
   bool _notificationsEnabled = false;
 
   @override
+  void initState() {
+    super.initState();
+    print('**********************************');
+    print('Pantalla: $runtimeType');
+    print('**********************************');
+  }
+
+  @override
   Widget build(BuildContext context) {
     return WillPopScope(
       onWillPop: () async {
@@ -44,7 +52,7 @@ class _ExplorerConfirmationScreenContentState extends State<ExplorerConfirmation
                     // Back button
                     IconButton(
                       icon: const Icon(Icons.arrow_back),
-                      onPressed: () => context.pop,
+                      onPressed: () => context.pop(),
                       padding: EdgeInsets.zero,
                       constraints: const BoxConstraints(),
                     ),

@@ -1,3 +1,4 @@
+import 'package:buro_app/preferences/app_preferences.dart';
 import 'package:buro_app/shared/action/getImage/presentation/cubit/image_cubit.dart';
 import 'package:buro_app/shared/action/getImage/presentation/cubit/image_states.dart';
 import 'package:cached_network_image/cached_network_image.dart';
@@ -15,6 +16,9 @@ class ExplorerUploadActivationScreenContent extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    print('**********************************');
+    print('Pantalla: $runtimeType');
+    print('**********************************');
     return WillPopScope(
       onWillPop: () async {
         context.pop();
@@ -34,7 +38,7 @@ class ExplorerUploadActivationScreenContent extends StatelessWidget {
                     // Back button
                     IconButton(
                       icon: const Icon(Icons.arrow_back),
-                      onPressed: () => context.pop,
+                      onPressed: () => context.pop(),
                       padding: EdgeInsets.zero,
                       constraints: const BoxConstraints(),
                     ),
@@ -195,7 +199,10 @@ class ExplorerUploadActivationScreenContent extends StatelessWidget {
                 child: SizedBox(
                   width: double.infinity,
                   child: ElevatedButton(
-                    onPressed: () => context.goNamed('explorer_home'),
+                    onPressed: ()  {
+                      _saveExplorerCompleted();
+                      context.goNamed('explorer_home');
+                    },
                     style: ElevatedButton.styleFrom(
                       backgroundColor: Colors.black,
                       foregroundColor: Colors.white,
@@ -219,6 +226,11 @@ class ExplorerUploadActivationScreenContent extends StatelessWidget {
         ),
       ),
     );
+  }
+
+  Future<void> _saveExplorerCompleted() async {
+    final prefs = AppPreferences.instance;
+    await prefs.saveExplorerCompleted();
   }
 }
 

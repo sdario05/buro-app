@@ -33,4 +33,19 @@ class AppPreferences {
     final prefs = await _prefs;
     await prefs.setBool('notifications', value);
   }
+
+  Future<void> saveExplorerCompleted() async {
+    final prefs = await _prefs;
+    await prefs.setBool('explorer_completed', true);
+  }
+
+  Future<bool> getExplorerCompleted() async {
+    final prefs = await _prefs;
+    return prefs.getBool('explorer_completed') ?? false;
+  }
+
+  Future<void> clearExplorerCompleted() async {
+    final prefs = await _prefs;
+    await prefs.remove('user');
+  }
 }

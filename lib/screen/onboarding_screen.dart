@@ -49,17 +49,24 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
   @override
   void initState() {
     super.initState();
+    _startAutoSlide();
+    _pageController = PageController(initialPage: 0);
     Future.delayed(const Duration(milliseconds: 0), () async {
-      final prefs = AppPreferences.instance;
-      _user = await prefs.getUser();
-      if (mounted && _user != null) {
-        context.goNamed('welcome');
-      } else {
-        _startAutoSlide();
-        _pageController = PageController(initialPage: 0);
-        setState(() {
-          _userChecked = true;
-        });
+      if (mounted) {
+        final prefs = AppPreferences.instance;
+        _user = await prefs.getUser();
+        if (_user != null) {
+          final explorerCompleted = await prefs.getExplorerCompleted();
+          if (explorerCompleted) {
+            context.goNamed('explorer_home');
+          } else {
+            context.goNamed('welcome');
+          }
+        } else {
+          setState(() {
+            _userChecked = true;
+          });
+        }
       }
     });
   }

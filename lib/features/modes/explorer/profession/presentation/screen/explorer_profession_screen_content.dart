@@ -17,6 +17,14 @@ class _ExplorerProfessionScreenContentState extends State<ExplorerProfessionScre
   final List<ProfessionEntry> _professions = [ProfessionEntry(profession: '', isReady: false)];
 
   @override
+  void initState() {
+    super.initState();
+    print('**********************************');
+    print('Pantalla: $runtimeType');
+    print('**********************************');
+  }
+
+  @override
   Widget build(BuildContext context) {
     return WillPopScope(
       onWillPop: () async {
@@ -37,7 +45,7 @@ class _ExplorerProfessionScreenContentState extends State<ExplorerProfessionScre
                     // Back button
                     IconButton(
                       icon: const Icon(Icons.arrow_back),
-                      onPressed: () => context.pop,
+                      onPressed: () => context.pop(),
                       padding: EdgeInsets.zero,
                       constraints: const BoxConstraints(),
                     ),
