@@ -1,9 +1,12 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
+import 'package:go_router/go_router.dart';
 
 class RegisterScreen extends StatefulWidget {
-  final Function(String) onNavigate;
 
-  const RegisterScreen({Key? key, required this.onNavigate}) : super(key: key);
+  const RegisterScreen({
+    Key? key,
+  }) : super(key: key);
 
   @override
   _RegisterScreenState createState() => _RegisterScreenState();
@@ -14,119 +17,133 @@ class _RegisterScreenState extends State<RegisterScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      body: SafeArea(
-        child: Padding(
-          padding: const EdgeInsets.all(16.0),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              // Header with logo and back button
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  Container(
-                    width: 40,
-                    height: 40,
-                    decoration: BoxDecoration(
-                      color: Colors.grey[200],
-                      shape: BoxShape.circle,
-                    ),
-                    child: Center(
-                      child: Text(
-                        'Logo',
-                        style: TextStyle(
-                          fontWeight: FontWeight.bold,
+    return WillPopScope(
+      onWillPop: () async {
+        if (_currentStep > 1) {
+          setState(() {
+            _currentStep--;
+          });
+        } else {
+          context.goNamed('onboarding');
+        }
+        return false;
+      },
+      child: Scaffold(
+        body: SafeArea(
+          child: Padding(
+            padding: const EdgeInsets.all(16.0),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                // Header with logo and back button
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Container(
+                      width: 40,
+                      height: 40,
+                      decoration: BoxDecoration(
+                        color: Colors.grey[200],
+                        shape: BoxShape.circle,
+                      ),
+                      child: const Center(
+                        child: Text(
+                          'Logo',
+                          style: TextStyle(
+                            fontWeight: FontWeight.bold,
+                          ),
                         ),
                       ),
                     ),
-                  ),
-                  Row(
-                    children: [
-                      IconButton(
-                        icon: Icon(Icons.close),
-                        onPressed: () => widget.onNavigate('onboarding'),
-                        padding: EdgeInsets.all(8),
-                        constraints: BoxConstraints(),
-                      ),
-                      IconButton(
-                        icon: Icon(Icons.arrow_back),
-                        onPressed: () {
-                          if (_currentStep > 1) {
-                            setState(() {
-                              _currentStep--;
-                            });
-                          } else {
-                            widget.onNavigate('onboarding');
-                          }
-                        },
-                        padding: EdgeInsets.all(8),
-                        constraints: BoxConstraints(),
-                      ),
-                    ],
-                  ),
-                ],
-              ),
-              SizedBox(height: 16),
+                    Row(
+                      children: [
+                        IconButton(
+                          icon: const Icon(Icons.close),
+                          onPressed: () {
+                            SystemNavigator.pop();
+                          },
+                          padding: const EdgeInsets.all(8),
+                          constraints: const BoxConstraints(),
+                        ),
+                        IconButton(
+                          icon: const Icon(Icons.arrow_back),
+                          onPressed: () {
+                            if (_currentStep > 1) {
+                              setState(() {
+                                _currentStep--;
+                              });
+                            } else {
+                              context.goNamed('onboarding');
+                            }
+                          },
+                          padding: const EdgeInsets.all(8),
+                          constraints: const BoxConstraints(),
+                        ),
+                      ],
+                    ),
+                  ],
+                ),
+                const SizedBox(height: 16),
 
-              // Progress indicator
-              Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: List.generate(
-                  4,
-                  (index) => Container(
-                    width: 8,
-                    height: 8,
-                    margin: EdgeInsets.symmetric(horizontal: 4),
-                    decoration: BoxDecoration(
-                      shape: BoxShape.circle,
-                      color: _currentStep == index + 1 ? Colors.black : Colors.grey[300],
+                // Progress indicator
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: List.generate(
+                    4,
+                    (index) => Container(
+                      width: 8,
+                      height: 8,
+                      margin: EdgeInsets.symmetric(horizontal: 4),
+                      decoration: BoxDecoration(
+                        shape: BoxShape.circle,
+                        color: _currentStep == index + 1 ? Colors.black : Colors.grey[300],
+                      ),
                     ),
                   ),
                 ),
-              ),
-              SizedBox(height: 24),
+                SizedBox(height: 24),
 
-              // Title
-              Text(
-                'Registrate',
-                style: TextStyle(
-                  fontSize: 24,
-                  fontWeight: FontWeight.bold,
+                // Title
+                Text(
+                  'Registrate',
+                  style: TextStyle(
+                    fontSize: 24,
+                    fontWeight: FontWeight.bold,
+                  ),
                 ),
-              ),
-              SizedBox(height: 8),
+                SizedBox(height: 8),
 
-              // Subtitle based on current step
-              Text(
-                _getSubtitleForStep(_currentStep),
-                style: TextStyle(
-                  fontSize: 14,
-                  color: Colors.grey[600],
+                // Subtitle based on current step
+                Text(
+                  _getSubtitleForStep(_currentStep),
+                  style: TextStyle(
+                    fontSize: 14,
+                    color: Colors.grey[600],
+                  ),
                 ),
-              ),
-              SizedBox(height: 24),
+                SizedBox(height: 24),
 
-              // Form content based on current step
-              Expanded(
-                child: _buildStepContent(_currentStep),
-              ),
+                // Form content based on current step
+                Expanded(
+                  child: _buildStepContent(_currentStep),
+                ),
 
-              // Continue button
-              ElevatedButton(
-                onPressed: () {
-                  if (_currentStep < 4) {
-                    setState(() {
-                      _currentStep++;
-                    });
-                  } else {
-                    // Navigate to already registered screen for demo purposes
-                    widget.onNavigate('alreadyRegistered');
-                  }
-                },
-                child: Text(_currentStep == 4 ? 'Activar cuenta' : 'Continuar'),
-              ),
-            ],
+                // Continue button
+                ElevatedButton(
+                  onPressed: () {
+                    if (_currentStep < 4) {
+                      setState(() {
+                        _currentStep++;
+                      });
+                    } else {
+                      // Navigate to already registered screen for demo purposes
+                      context.goNamed('alreadyRegistered');
+                    }
+                  },
+                  child: Text(_currentStep == 4 ? 'Activar cuenta' : 'Continuar'),
+                ),
+              ],
+            ),
           ),
         ),
       ),

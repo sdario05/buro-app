@@ -10,7 +10,10 @@ import 'package:buro_app/features/modes/explorer/uploadcv/presentation/screen/ex
 import 'package:buro_app/features/modes/explorer/uploadcv/presentation/screen/explorer_upload_cv_screen.dart';
 import 'package:buro_app/features/modes/explorer/welcome/presentation/screen/explorer_welcome_screen.dart';
 import 'package:buro_app/features/welcome/presentation/screen/welcome_screen.dart';
+import 'package:buro_app/screen/already_registered_screen.dart';
+import 'package:buro_app/screen/explorer_generate_cv_welcome_screen.dart';
 import 'package:buro_app/screen/onboarding_screen.dart';
+import 'package:buro_app/screen/register_screen.dart';
 import 'package:go_router/go_router.dart';
 
 final GoRouter router = GoRouter(
@@ -25,6 +28,16 @@ final GoRouter router = GoRouter(
       name: 'login',
       path: '/login',
       builder: (context, state) => const LoginScreen(),
+    ),
+    GoRoute(
+      name: 'register',
+      path: '/register',
+      builder: (context, state) => const RegisterScreen(),
+    ),
+    GoRoute(
+      name: 'alreadyRegistered',
+      path: '/alreadyRegistered',
+      builder: (context, state) => const AlreadyRegisteredScreen(),
     ),
     GoRoute(
       name: 'welcome',
@@ -97,6 +110,11 @@ final GoRouter router = GoRouter(
                             ]
                         ),
                       ]
+                  ),
+                  GoRoute(
+                    name: 'explorer_generate_cv',
+                    path: '/explorer_generate_cv',
+                    builder: (context, state) => const ExplorerGenerateCVWelcomeScreen(),
                   ),
                 ]
             ),
