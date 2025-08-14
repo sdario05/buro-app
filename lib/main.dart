@@ -309,7 +309,7 @@ class _AppNavigatorState extends State<AppNavigator> {
         printScreenName('ExplorerHomeScreen');
         return ExplorerHomeScreen(
           onNavigate: navigateTo,
-          onBack: () => navigateTo('explorer_final'),
+          onBack: () => navigateTo('explorer_upload_activation'),
         );
       // Pantallas para generar CV (FLUJO GENERATE)
       case 'explorer_generate_cv':

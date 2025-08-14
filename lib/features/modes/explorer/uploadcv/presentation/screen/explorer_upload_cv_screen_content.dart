@@ -205,36 +205,6 @@ class _ExplorerUploadCVScreenContentState extends State<ExplorerUploadCVScreenCo
                           ),
                         ],
                       ),
-
-                      // Upload button
-                      Padding(
-                        padding: const EdgeInsets.only(bottom: 24.0),
-                        child: SizedBox(
-                          width: double.infinity,
-                          child: ElevatedButton(
-                            onPressed: _selectedFile != null && !_isUploading ? _uploadFile : null,
-                            style: ElevatedButton.styleFrom(
-                              backgroundColor: Colors.black,
-                              foregroundColor: Colors.white,
-                              padding: const EdgeInsets.symmetric(vertical: 16),
-                              shape: RoundedRectangleBorder(
-                                borderRadius: BorderRadius.circular(8),
-                              ),
-                              disabledBackgroundColor: Colors.grey,
-                            ),
-                            child: Text(
-                              _isUploading
-                                ? 'Subiendo...'
-                                : 'Subir mi CV a Logo',
-                              style: const TextStyle(
-                                fontSize: 16,
-                                fontWeight: FontWeight.bold,
-                              ),
-                            ),
-                          ),
-                        ),
-                      ),
-
                       BlocConsumer<CvCubit, CvStates>(
                         listener: (context, state) {
                           switch (state) {
@@ -250,6 +220,34 @@ class _ExplorerUploadCVScreenContentState extends State<ExplorerUploadCVScreenCo
                 ),
               ),
             ],
+          ),
+        ),
+        bottomNavigationBar: // Upload button
+        Padding(
+          padding: const EdgeInsets.all(24),
+          child: SizedBox(
+            width: double.infinity,
+            child: ElevatedButton(
+              onPressed: _selectedFile != null && !_isUploading ? _uploadFile : null,
+              style: ElevatedButton.styleFrom(
+                backgroundColor: Colors.black,
+                foregroundColor: Colors.white,
+                padding: const EdgeInsets.symmetric(vertical: 16),
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(8),
+                ),
+                disabledBackgroundColor: Colors.grey,
+              ),
+              child: Text(
+                _isUploading
+                    ? 'Subiendo...'
+                    : 'Subir mi CV a Logo',
+                style: const TextStyle(
+                  fontSize: 16,
+                  fontWeight: FontWeight.bold,
+                ),
+              ),
+            ),
           ),
         ),
       ),
