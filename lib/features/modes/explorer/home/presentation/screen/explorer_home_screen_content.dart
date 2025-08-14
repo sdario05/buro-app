@@ -6,15 +6,12 @@ import 'package:buro_app/shared/cubit/user_name_cubit.dart';
 import 'package:buro_app/shared/cubit/user_name_states.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:go_router/go_router.dart';
 
 class ExplorerHomeScreenContent extends StatefulWidget {
-  final Function(String) onNavigate;
-  final VoidCallback onBack;
 
   const ExplorerHomeScreenContent({
     Key? key,
-    required this.onNavigate,
-    required this.onBack,
   }) : super(key: key);
 
   @override
@@ -48,7 +45,7 @@ class _ExplorerHomeScreenContentState extends State<ExplorerHomeScreenContent> {
   Widget build(BuildContext context) {
     return WillPopScope(
       onWillPop: () async {
-        widget.onBack();
+        context.pop();
         return false;
       },
       child: Scaffold(

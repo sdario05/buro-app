@@ -5,22 +5,19 @@ import 'package:flutter/services.dart';
 import 'package:flutter_cache_manager/flutter_cache_manager.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:go_router/go_router.dart';
 
 class ExplorerUploadSuccessScreenContent extends StatelessWidget {
-  final Function(String) onNavigate;
-  final Function() onBack;
 
   const ExplorerUploadSuccessScreenContent({
     Key? key,
-    required this.onNavigate,
-    required this.onBack,
   }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return WillPopScope(
       onWillPop: () async {
-        onBack();
+        context.pop();
         return false;
       },
       child: Scaffold(
@@ -37,7 +34,7 @@ class ExplorerUploadSuccessScreenContent extends StatelessWidget {
                     // Back button
                     IconButton(
                       icon: const Icon(Icons.arrow_back),
-                      onPressed: onBack,
+                      onPressed: () => context.pop,
                       padding: EdgeInsets.zero,
                       constraints: const BoxConstraints(),
                     ),
@@ -164,7 +161,7 @@ class ExplorerUploadSuccessScreenContent extends StatelessWidget {
                 child: SizedBox(
                   width: double.infinity,
                   child: ElevatedButton(
-                    onPressed: () => onNavigate('explorer_upload_activation'),
+                    onPressed: () => context.goNamed('explorer_upload_activation'),
                     style: ElevatedButton.styleFrom(
                       backgroundColor: Colors.grey[400],
                       foregroundColor: Colors.black,

@@ -7,13 +7,8 @@ import 'package:buro_app/di/injection.dart';
 
 class ExplorerHomeScreen extends StatelessWidget {
 
-  final Function(String) onNavigate;
-  final VoidCallback onBack;
-
   const ExplorerHomeScreen({
     super.key,
-    required this.onNavigate,
-    required this.onBack,
   });
 
   @override
@@ -30,7 +25,7 @@ class ExplorerHomeScreen extends StatelessWidget {
               ..getUserName()
         )
       ],
-      child: ExplorerHomeScreenContent(onNavigate: onNavigate, onBack: onBack),
+      child: const ExplorerHomeScreenContent(),
     );
   }
 }

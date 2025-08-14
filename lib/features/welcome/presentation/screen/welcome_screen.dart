@@ -6,13 +6,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 class WelcomeScreen extends StatelessWidget {
-  final Function() onLogout;
-  final Function(String) onModeSelect;
 
   const WelcomeScreen({
     super.key,
-    required this.onLogout,
-    required this.onModeSelect,
   });
 
   @override
@@ -28,10 +24,7 @@ class WelcomeScreen extends StatelessWidget {
               ..getUserName()
         )
       ],
-      child: WelcomeScreenContent(
-        onLogout: onLogout,
-        onModeSelect: onModeSelect,
-      ),
+      child: const WelcomeScreenContent(),
     );
   }
 }

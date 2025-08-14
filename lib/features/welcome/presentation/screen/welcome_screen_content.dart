@@ -2,20 +2,19 @@ import 'package:buro_app/features/login/domain/model/user_model.dart';
 import 'package:buro_app/features/welcome/domain/model/carousel_model.dart';
 import 'package:buro_app/features/welcome/presentation/cubit/carousel_cubit.dart';
 import 'package:buro_app/features/welcome/presentation/cubit/carousel_states.dart';
+import 'package:buro_app/preferences/app_preferences.dart';
 import 'package:buro_app/shared/cubit/user_name_cubit.dart';
 import 'package:buro_app/shared/cubit/user_name_states.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'dart:async';
 
+import 'package:go_router/go_router.dart';
+
 class WelcomeScreenContent extends StatefulWidget {
-  final Function() onLogout;
-  final Function(String) onModeSelect;
 
   const WelcomeScreenContent({
     Key? key,
-    required this.onLogout,
-    required this.onModeSelect,
   }) : super(key: key);
 
   @override
@@ -87,7 +86,9 @@ class _WelcomeScreenContentState extends State<WelcomeScreenContent> {
                     ),
                   ),
                   TextButton.icon(
-                    onPressed: widget.onLogout,
+                    onPressed: () {
+                      _handleLogout();
+                    },
                     icon: Icon(Icons.logout, size: 14),
                     label: Text('Salir'),
                     style: TextButton.styleFrom(
@@ -238,7 +239,9 @@ class _WelcomeScreenContentState extends State<WelcomeScreenContent> {
               Column(
                 children: [
                   ElevatedButton(
-                    onPressed: () => widget.onModeSelect('visitante'),
+                    onPressed: () {
+                      context.goNamed('modeExplanation');
+                    },
                     child: Text('Visitante'),
                     style: ElevatedButton.styleFrom(
                       padding: EdgeInsets.symmetric(vertical: 12),
@@ -246,7 +249,9 @@ class _WelcomeScreenContentState extends State<WelcomeScreenContent> {
                   ),
                   SizedBox(height: 12),
                   ElevatedButton(
-                    onPressed: () => widget.onModeSelect('generador'),
+                    onPressed: () {
+                      context.goNamed('modeExplanation');
+                    },
                     child: Text('Generador de empleos'),
                     style: ElevatedButton.styleFrom(
                       backgroundColor: Colors.grey[200],
@@ -256,7 +261,9 @@ class _WelcomeScreenContentState extends State<WelcomeScreenContent> {
                   ),
                   SizedBox(height: 12),
                   ElevatedButton(
-                    onPressed: () => widget.onModeSelect('explorador'),
+                    onPressed: () {
+                      context.goNamed('explorer_explanation');
+                    },
                     child: Text('Explorador de empleos'),
                     style: ElevatedButton.styleFrom(
                       backgroundColor: Colors.grey[200],
@@ -271,5 +278,13 @@ class _WelcomeScreenContentState extends State<WelcomeScreenContent> {
         ),
       ),
     );
+  }
+
+  void _handleLogout() {
+    Future.delayed(const Duration(milliseconds: 100), () async {
+      final prefs = AppPreferences.instance;
+      await prefs.clearUser();
+      context.goNamed('onboarding');
+    });
   }
 }

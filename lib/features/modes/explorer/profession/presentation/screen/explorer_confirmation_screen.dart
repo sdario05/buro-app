@@ -5,15 +5,10 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:buro_app/di/injection.dart';
 
 class ExplorerConfirmationScreen extends StatelessWidget {
-
-  final Function(String, {dynamic data}) onNavigate;
-  final Function() onBack;
   final List<String> professions; // Agregar esta línea
 
   const ExplorerConfirmationScreen({
     super.key,
-    required this.onNavigate,
-    required this.onBack,
     required this.professions,
   });
 
@@ -22,7 +17,7 @@ class ExplorerConfirmationScreen extends StatelessWidget {
     return BlocProvider<ImageCubit>(
       create: (context) => getIt<ImageCubit>()
         ..getImage(ImageType.explorerProfessionSuccess),
-      child: ExplorerConfirmationScreenContent(onNavigate: onNavigate, onBack: onBack, professions: professions,),
+      child: ExplorerConfirmationScreenContent(professions: professions,),
     );
   }
 }

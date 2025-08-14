@@ -1,15 +1,12 @@
 import 'package:buro_app/features/modes/explorer/profession/presentation/widget/save_button_states.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:go_router/go_router.dart';
 
 class ExplorerProfessionScreenContent extends StatefulWidget {
-  final Function(String, {dynamic data}) onNavigate;
-  final Function() onBack;
 
   const ExplorerProfessionScreenContent({
     Key? key,
-    required this.onNavigate,
-    required this.onBack,
   }) : super(key: key);
 
   @override
@@ -23,7 +20,7 @@ class _ExplorerProfessionScreenContentState extends State<ExplorerProfessionScre
   Widget build(BuildContext context) {
     return WillPopScope(
       onWillPop: () async {
-        widget.onBack();
+        context.pop();
         return false;
       },
       child: Scaffold(
@@ -40,7 +37,7 @@ class _ExplorerProfessionScreenContentState extends State<ExplorerProfessionScre
                     // Back button
                     IconButton(
                       icon: const Icon(Icons.arrow_back),
-                      onPressed: widget.onBack,
+                      onPressed: () => context.pop,
                       padding: EdgeInsets.zero,
                       constraints: const BoxConstraints(),
                     ),
@@ -130,7 +127,7 @@ class _ExplorerProfessionScreenContentState extends State<ExplorerProfessionScre
               SaveButtonStates(
                 professions: _professions,
                 onSaveSuccess: (professions) {
-                  widget.onNavigate('explorer_confirmation', data: professions);
+                  context.goNamed('explorer_confirmation', extra: professions);
                 },
               ),
             ],

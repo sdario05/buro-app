@@ -9,15 +9,12 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_cache_manager/flutter_cache_manager.dart';
+import 'package:go_router/go_router.dart';
 
 class ExplorerWelcomeScreenContent extends StatelessWidget {
-  final Function(String) onNavigate;
-  final Function() onBack;
 
   const ExplorerWelcomeScreenContent({
     Key? key,
-    required this.onNavigate,
-    required this.onBack,
   }) : super(key: key);
 
   @override
@@ -27,7 +24,7 @@ class ExplorerWelcomeScreenContent extends StatelessWidget {
 
     return WillPopScope(
       onWillPop: () async {
-        onBack();
+        context.pop();
         return false;
       },
       child: Scaffold(
@@ -44,7 +41,9 @@ class ExplorerWelcomeScreenContent extends StatelessWidget {
                     // Back button
                     IconButton(
                       icon: const Icon(Icons.arrow_back),
-                      onPressed: onBack,
+                      onPressed: () {
+                        context.pop();
+                      },
                       padding: EdgeInsets.zero,
                       constraints: const BoxConstraints(),
                     ),
@@ -192,7 +191,7 @@ class ExplorerWelcomeScreenContent extends StatelessWidget {
                   borderRadius: BorderRadius.circular(8),
                 ),
                 child: TextButton(
-                  onPressed: () => onNavigate('explorer_upload_cv'),
+                  onPressed: () => context.goNamed('explorer_upload_cv'),
                   style: TextButton.styleFrom(
                     padding: const EdgeInsets.symmetric(vertical: 16),
                     shape: RoundedRectangleBorder(
@@ -218,7 +217,7 @@ class ExplorerWelcomeScreenContent extends StatelessWidget {
                   borderRadius: BorderRadius.circular(8),
                 ),
                 child: TextButton(
-                  onPressed: () => onNavigate('explorer_generate_cv'),
+                  onPressed: () => context.goNamed('explorer_generate_cv'),
                   style: TextButton.styleFrom(
                     padding: const EdgeInsets.symmetric(vertical: 16),
                     shape: RoundedRectangleBorder(

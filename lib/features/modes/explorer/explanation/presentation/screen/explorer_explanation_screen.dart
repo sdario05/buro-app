@@ -6,13 +6,8 @@ import 'package:buro_app/di/injection.dart';
 
 class ExplorerExplanationScreen extends StatelessWidget {
 
-  final Function(String) onNavigate;
-  final Function() onBack;
-
   const ExplorerExplanationScreen({
     super.key,
-    required this.onNavigate,
-    required this.onBack,
   });
 
   @override
@@ -20,7 +15,7 @@ class ExplorerExplanationScreen extends StatelessWidget {
     return BlocProvider<ImageCubit>(
       create: (context) => getIt<ImageCubit>()
         ..getImage(ImageType.explorerExplanation),
-      child: ExplorerExplanationScreenContent(onNavigate: onNavigate, onBack: onBack),
+      child: const ExplorerExplanationScreenContent(),
     );
   }
 }

@@ -1,10 +1,16 @@
+import 'package:buro_app/core/navigation/app_router.dart';
+import 'package:buro_app/features/login/domain/model/user_model.dart';
+import 'package:buro_app/preferences/app_preferences.dart';
 import 'package:flutter/material.dart';
 import 'dart:async';
 
-class OnboardingScreen extends StatefulWidget {
-  final Function(String) onNavigate;
+import 'package:go_router/go_router.dart';
 
-  const OnboardingScreen({Key? key, required this.onNavigate}) : super(key: key);
+class OnboardingScreen extends StatefulWidget {
+
+  const OnboardingScreen({
+    Key? key,
+  }) : super(key: key);
 
   @override
   _OnboardingScreenState createState() => _OnboardingScreenState();
@@ -14,6 +20,8 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
   int _currentSlide = 0;
   late PageController _pageController;
   Timer? _timer;
+  UserModel? _user;
+  bool _userChecked = false;
 
   final List<Map<String, String>> _slides = [
     {
@@ -41,8 +49,19 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
   @override
   void initState() {
     super.initState();
-    _pageController = PageController(initialPage: 0);
-    _startAutoSlide();
+    Future.delayed(const Duration(milliseconds: 0), () async {
+      final prefs = AppPreferences.instance;
+      _user = await prefs.getUser();
+      if (mounted && _user != null) {
+        context.goNamed('welcome');
+      } else {
+        _startAutoSlide();
+        _pageController = PageController(initialPage: 0);
+        setState(() {
+          _userChecked = true;
+        });
+      }
+    });
   }
 
   @override
@@ -53,7 +72,7 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
   }
 
   void _startAutoSlide() {
-    _timer = Timer.periodic(Duration(seconds: 5), (timer) {
+    _timer = Timer.periodic(const Duration(seconds: 5), (timer) {
       if (_currentSlide < _slides.length - 1) {
         _currentSlide++;
       } else {
@@ -62,7 +81,7 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
       if (_pageController.hasClients) {
         _pageController.animateToPage(
           _currentSlide,
-          duration: Duration(milliseconds: 500),
+          duration: const Duration(milliseconds: 500),
           curve: Curves.easeInOut,
         );
       }
@@ -72,7 +91,12 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: SafeArea(
+      body:
+      !_userChecked
+        ? const Center(
+          child: CircularProgressIndicator()
+      )
+        : SafeArea(
         child: Column(
           children: [
             // Logo
@@ -137,7 +161,7 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: List.generate(
                   _slides.length,
-                  (index) => Container(
+                      (index) => Container(
                     width: 8,
                     height: 8,
                     margin: EdgeInsets.symmetric(horizontal: 4),
@@ -186,7 +210,7 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
               child: Column(
                 children: [
                   ElevatedButton(
-                    onPressed: () => widget.onNavigate('login'),
+                    onPressed: () => context.goNamed('login'),
                     child: Text('Iniciar sesión'),
                     style: ElevatedButton.styleFrom(
                       padding: EdgeInsets.symmetric(vertical: 16),
@@ -194,7 +218,7 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
                   ),
                   SizedBox(height: 12),
                   ElevatedButton(
-                    onPressed: () => widget.onNavigate('register'),
+                    onPressed: () => context.goNamed('register'),
                     child: Text('Registrarme'),
                     style: ElevatedButton.styleFrom(
                       backgroundColor: Colors.grey[200],

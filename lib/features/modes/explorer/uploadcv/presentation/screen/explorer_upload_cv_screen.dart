@@ -6,20 +6,15 @@ import 'package:buro_app/di/injection.dart';
 
 class ExplorerUploadCvScreen extends StatelessWidget {
 
-  final Function(String) onNavigate;
-  final Function() onBack;
-
   const ExplorerUploadCvScreen({
     super.key,
-    required this.onNavigate,
-    required this.onBack,
   });
 
   @override
   Widget build(BuildContext context) {
     return BlocProvider<CvCubit>(
       create: (context) => getIt<CvCubit>(),
-      child: ExplorerUploadCVScreenContent(onNavigate: onNavigate, onBack: onBack),
+      child: const ExplorerUploadCVScreenContent(),
     );
   }
 }

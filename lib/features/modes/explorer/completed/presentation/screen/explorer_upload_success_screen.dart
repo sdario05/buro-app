@@ -6,13 +6,8 @@ import 'package:buro_app/di/injection.dart';
 
 class ExplorerUploadSuccessScreen extends StatelessWidget {
 
-  final Function(String) onNavigate;
-  final Function() onBack;
-
   const ExplorerUploadSuccessScreen({
     super.key,
-    required this.onNavigate,
-    required this.onBack,
   });
 
   @override
@@ -20,7 +15,7 @@ class ExplorerUploadSuccessScreen extends StatelessWidget {
     return BlocProvider<ImageCubit>(
       create: (context) => getIt<ImageCubit>()
         ..getImage(ImageType.explorerCompleted),
-      child: ExplorerUploadSuccessScreenContent(onNavigate: onNavigate, onBack: onBack),
+      child: const ExplorerUploadSuccessScreenContent(),
     );
   }
 }

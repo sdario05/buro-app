@@ -6,13 +6,8 @@ import 'package:buro_app/di/injection.dart';
 
 class ExplorerUploadActivationScreen extends StatelessWidget {
 
-  final Function(String) onNavigate;
-  final Function() onBack;
-
   const ExplorerUploadActivationScreen({
     super.key,
-    required this.onNavigate,
-    required this.onBack,
   });
 
   @override
@@ -20,7 +15,7 @@ class ExplorerUploadActivationScreen extends StatelessWidget {
     return BlocProvider<ImageCubit>(
       create: (context) => getIt<ImageCubit>()
         ..getImage(ImageType.explorerReminder),
-      child: ExplorerUploadActivationScreenContent(onNavigate: onNavigate, onBack: onBack),
+      child: const ExplorerUploadActivationScreenContent(),
     );
   }
 }

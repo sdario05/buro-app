@@ -1,3 +1,4 @@
+import 'package:buro_app/core/navigation/app_router.dart';
 import 'package:buro_app/di/injection.dart';
 import 'package:buro_app/features/modes/explorer/explanation/presentation/screen/explorer_explanation_screen.dart';
 import 'package:buro_app/features/modes/explorer/profession/presentation/screen/explorer_profession_screen.dart';
@@ -59,7 +60,7 @@ void main() {
 class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
+    return MaterialApp.router(
       title: 'Buro App',
       debugShowCheckedModeBanner: false,
       theme: ThemeData(
@@ -111,12 +112,12 @@ class MyApp extends StatelessWidget {
           isDense: false,
         ),
       ),
-      home: const AppNavigator(),
+      routerConfig: router,
     );
   }
 }
 
-class AppNavigator extends StatefulWidget {
+/*class AppNavigator extends StatefulWidget {
   const AppNavigator({Key? key}) : super(key: key);
 
   @override
@@ -483,4 +484,4 @@ class _AppNavigatorState extends State<AppNavigator> {
       print('******************************** Screen: $screenName ********************************');
     }
   }
-}
+}*/

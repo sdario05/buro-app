@@ -1,3 +1,4 @@
+import 'package:buro_app/core/navigation/app_router.dart';
 import 'package:buro_app/shared/action/getImage/presentation/cubit/image_cubit.dart';
 import 'package:buro_app/shared/action/getImage/presentation/cubit/image_states.dart';
 import 'package:cached_network_image/cached_network_image.dart';
@@ -5,22 +6,19 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_cache_manager/flutter_cache_manager.dart';
+import 'package:go_router/go_router.dart';
 
 class ExplorerCVSuccessScreenContent extends StatelessWidget {
-  final Function(String) onNavigate;
-  final Function() onBack;
 
   const ExplorerCVSuccessScreenContent({
     Key? key,
-    required this.onNavigate,
-    required this.onBack,
   }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return WillPopScope(
       onWillPop: () async {
-        onBack();
+        context.pop();
         return false;
       },
       child: Scaffold(
@@ -37,7 +35,7 @@ class ExplorerCVSuccessScreenContent extends StatelessWidget {
                     // Back button
                     IconButton(
                       icon: const Icon(Icons.arrow_back),
-                      onPressed: onBack,
+                      onPressed: () => context.pop,
                       padding: EdgeInsets.zero,
                       constraints: const BoxConstraints(),
                     ),
@@ -166,7 +164,7 @@ class ExplorerCVSuccessScreenContent extends StatelessWidget {
                             borderRadius: BorderRadius.circular(8),
                           ),
                           child: TextButton(
-                            onPressed: () => onNavigate('explorer_dashboard'),
+                            onPressed: () => context.goNamed('explorer_dashboard'),
                             style: TextButton.styleFrom(
                               padding: const EdgeInsets.symmetric(vertical: 16),
                               shape: RoundedRectangleBorder(

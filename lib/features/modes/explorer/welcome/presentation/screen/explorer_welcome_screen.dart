@@ -7,13 +7,8 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 
 class ExplorerWelcomeScreen extends StatelessWidget {
 
-  final Function(String) onNavigate;
-  final Function() onBack;
-
   const ExplorerWelcomeScreen({
     super.key,
-    required this.onNavigate,
-    required this.onBack,
   });
 
   @override
@@ -29,10 +24,7 @@ class ExplorerWelcomeScreen extends StatelessWidget {
               ..getUserName()
         )
       ],
-      child: ExplorerWelcomeScreenContent(
-        onNavigate: onNavigate,
-        onBack: onBack,
-      ),
+      child: const ExplorerWelcomeScreenContent(),
     );
   }
 }

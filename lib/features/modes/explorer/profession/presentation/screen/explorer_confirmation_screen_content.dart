@@ -6,16 +6,13 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_cache_manager/flutter_cache_manager.dart';
+import 'package:go_router/go_router.dart';
 
 class ExplorerConfirmationScreenContent extends StatefulWidget {
-  final Function(String) onNavigate;
-  final Function() onBack;
   final List<String> professions; // Agregar esta línea
 
   const ExplorerConfirmationScreenContent({
     Key? key,
-    required this.onNavigate,
-    required this.onBack,
     required this.professions, // Agregar esta línea
   }) : super(key: key);
 
@@ -30,7 +27,7 @@ class _ExplorerConfirmationScreenContentState extends State<ExplorerConfirmation
   Widget build(BuildContext context) {
     return WillPopScope(
       onWillPop: () async {
-        widget.onBack();
+        context.pop();
         return false;
       },
       child: Scaffold(
@@ -47,7 +44,7 @@ class _ExplorerConfirmationScreenContentState extends State<ExplorerConfirmation
                     // Back button
                     IconButton(
                       icon: const Icon(Icons.arrow_back),
-                      onPressed: widget.onBack,
+                      onPressed: () => context.pop,
                       padding: EdgeInsets.zero,
                       constraints: const BoxConstraints(),
                     ),
@@ -217,7 +214,7 @@ class _ExplorerConfirmationScreenContentState extends State<ExplorerConfirmation
                 child: SizedBox(
                   width: double.infinity,
                   child: ElevatedButton(
-                    onPressed: () => widget.onNavigate('explorer_contact'),
+                    onPressed: () => context.goNamed('explorer_contact'),
                     style: ElevatedButton.styleFrom(
                       backgroundColor: Colors.grey[400],
                       foregroundColor: Colors.black,

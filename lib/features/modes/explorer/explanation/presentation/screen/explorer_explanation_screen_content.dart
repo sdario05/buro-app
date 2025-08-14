@@ -2,27 +2,26 @@ import 'package:buro_app/shared/action/getImage/presentation/cubit/image_cubit.d
 import 'package:buro_app/shared/action/getImage/presentation/cubit/image_states.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_cache_manager/flutter_cache_manager.dart';
+import 'package:go_router/go_router.dart';
 
 class ExplorerExplanationScreenContent extends StatelessWidget {
-  final Function(String) onNavigate;
-  final Function() onBack;
 
   const ExplorerExplanationScreenContent({
     Key? key,
-    required this.onNavigate,
-    required this.onBack,
   }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
+    print('Pantalla: $runtimeType');
     final screenSize = MediaQuery.of(context).size;
     final isSmallScreen = screenSize.height < 700;
 
     return WillPopScope(
       onWillPop: () async {
-        onBack();
+        context.pop();
         return false;
       },
       child: Scaffold(
@@ -59,7 +58,7 @@ class ExplorerExplanationScreenContent extends StatelessWidget {
                             ),
                           ),
                           TextButton.icon(
-                            onPressed: onBack,
+                            onPressed: SystemNavigator.pop,
                             icon: const Icon(Icons.arrow_back, size: 14),
                             label: const Text('Volver'),
                             style: TextButton.styleFrom(
@@ -163,7 +162,9 @@ class ExplorerExplanationScreenContent extends StatelessWidget {
                             SizedBox(
                               width: double.infinity,
                               child: ElevatedButton(
-                                onPressed: () => onNavigate('explorer_explanation_detail'),
+                                onPressed: () {
+                                  context.goNamed('explorer_explanation_detail');
+                                },
                                 style: ElevatedButton.styleFrom(
                                   padding: const EdgeInsets.symmetric(vertical: 15),
                                 ),
@@ -174,7 +175,9 @@ class ExplorerExplanationScreenContent extends StatelessWidget {
                             SizedBox(
                               width: double.infinity,
                               child: ElevatedButton(
-                                onPressed: () => onNavigate('explorer_welcome'),
+                                onPressed: () {
+                                  context.goNamed('explorer_welcome');
+                                },
                                 style: ElevatedButton.styleFrom(
                                   backgroundColor: Colors.grey[200],
                                   foregroundColor: Colors.black,

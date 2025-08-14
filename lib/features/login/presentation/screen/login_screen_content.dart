@@ -2,13 +2,12 @@ import 'package:buro_app/features/login/presentation/widget/login_button.dart';
 import 'package:buro_app/features/login/presentation/cubit/login_cubit.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:go_router/go_router.dart';
 
 class LoginScreenContent extends StatefulWidget {
-  final Function(String) onNavigate;
 
   const LoginScreenContent({
     Key? key,
-    required this.onNavigate,
   }) : super(key: key);
 
   @override
@@ -29,7 +28,7 @@ class _LoginScreenContentState extends State<LoginScreenContent> {
   }
 
   void _onLoginSuccess() {
-    widget.onNavigate('welcome');
+    context.goNamed('welcome');
   }
 
   void _onLoginError(String msg) {
@@ -85,7 +84,7 @@ class _LoginScreenContentState extends State<LoginScreenContent> {
                           children: [
                             IconButton(
                               icon: const Icon(Icons.close),
-                              onPressed: () => widget.onNavigate('onboarding'),
+                              onPressed: () => context.goNamed('onboarding'),
                               padding: const EdgeInsets.all(8),
                               constraints: const BoxConstraints(),
                               iconSize: 22,
@@ -93,7 +92,7 @@ class _LoginScreenContentState extends State<LoginScreenContent> {
                             ),
                             IconButton(
                               icon: const Icon(Icons.arrow_back),
-                              onPressed: () => widget.onNavigate('onboarding'),
+                              onPressed: () => context.goNamed('onboarding'),
                               padding: const EdgeInsets.all(8),
                               constraints: const BoxConstraints(),
                               iconSize: 22,
@@ -221,7 +220,7 @@ class _LoginScreenContentState extends State<LoginScreenContent> {
                     // Register link
                     Center(
                       child: TextButton(
-                        onPressed: () => widget.onNavigate('register'),
+                        onPressed: () =>context.goNamed('register'),
                         style: TextButton.styleFrom(
                           textStyle: TextStyle(
                             fontSize: 14,

@@ -5,15 +5,12 @@ import 'dart:io';
 import 'package:file_picker/file_picker.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:go_router/go_router.dart';
 
 class ExplorerUploadCVScreenContent extends StatefulWidget {
-  final Function(String) onNavigate;
-  final Function() onBack;
 
   const ExplorerUploadCVScreenContent({
     Key? key,
-    required this.onNavigate,
-    required this.onBack,
   }) : super(key: key);
 
   @override
@@ -54,7 +51,7 @@ class _ExplorerUploadCVScreenContentState extends State<ExplorerUploadCVScreenCo
   Widget build(BuildContext context) {
     return WillPopScope(
       onWillPop: () async {
-        widget.onBack();
+        context.pop();
         return false;
       },
       child: Scaffold(
@@ -71,7 +68,7 @@ class _ExplorerUploadCVScreenContentState extends State<ExplorerUploadCVScreenCo
                     // Back button
                     IconButton(
                       icon: const Icon(Icons.arrow_back),
-                      onPressed: widget.onBack,
+                      onPressed: () => context.pop,
                       padding: EdgeInsets.zero,
                       constraints: const BoxConstraints(),
                     ),
@@ -209,7 +206,10 @@ class _ExplorerUploadCVScreenContentState extends State<ExplorerUploadCVScreenCo
                         listener: (context, state) {
                           switch (state) {
                             case Success(): {
-                              widget.onNavigate('explorer_cv_success');
+                              setState(() {
+                                _isUploading = false;
+                              });
+                              context.goNamed('explorer_cv_success');
                             }
                           }
                         },
