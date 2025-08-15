@@ -243,7 +243,7 @@ class _WelcomeScreenContentState extends State<WelcomeScreenContent> {
                 children: [
                   ElevatedButton(
                     onPressed: () {
-                      context.goNamed('modeExplanation');
+                      context.goNamed('mode_explanation', extra: 'visitante');
                     },
                     child: Text('Visitante'),
                     style: ElevatedButton.styleFrom(
@@ -253,7 +253,7 @@ class _WelcomeScreenContentState extends State<WelcomeScreenContent> {
                   SizedBox(height: 12),
                   ElevatedButton(
                     onPressed: () {
-                      context.goNamed('modeExplanation');
+                      context.goNamed('mode_explanation', extra: 'generador');
                     },
                     child: Text('Generador de empleos'),
                     style: ElevatedButton.styleFrom(
