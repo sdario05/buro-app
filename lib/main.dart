@@ -29,7 +29,7 @@ import 'features/modes/explorer/generate_cv/presentation/screen/explorer_educati
 import 'features/modes/explorer/generate_cv/presentation/screen/explorer_personal_info_question_screen.dart';
 import 'features/modes/explorer/generate_cv/presentation/screen/explorer_personal_info_screen.dart';
 import 'features/modes/explorer/generate_cv/presentation/screen/explorer_photo_question_screen.dart';
-import 'screen/explorer_photo_screen.dart';
+import 'features/modes/explorer/generate_cv/presentation/screen/explorer_photo_screen.dart';
 import 'features/modes/explorer/generate_cv/presentation/screen/explorer_cv_summary_screen.dart';
 import 'features/modes/explorer/generate_cv/presentation/screen/explorer_professional_welcome_screen.dart';
 import 'features/modes/explorer/generate_cv/presentation/screen/explorer_profession_input_screen.dart';
@@ -38,10 +38,10 @@ import 'features/modes/explorer/generate_cv/presentation/screen/explorer_experie
 import 'features/modes/explorer/generate_cv/presentation/screen/explorer_course_question_screen.dart';
 import 'features/modes/explorer/generate_cv/presentation/screen/explorer_course_screen.dart';
 import 'screen/explorer_cv_photo_question_screen.dart';
-import 'screen/explorer_cv_photo_screen.dart';
-import 'screen/explorer_professional_summary_screen.dart';
-import 'screen/explorer_cv_completed_screen.dart';
-import 'screen/explorer_activation_screen.dart';
+import 'features/modes/explorer/generate_cv/presentation/screen/explorer_cv_photo_screen.dart';
+import 'features/modes/explorer/generate_cv/presentation/screen/explorer_professional_summary_screen.dart';
+import 'features/modes/explorer/generate_cv/presentation/screen/explorer_cv_completed_screen.dart';
+import 'features/modes/explorer/generate_cv/presentation/screen/explorer_activation_screen.dart';
 import 'models/user.dart';
 import 'features/modes/explorer/reminder/presentation/screen/explorer_upload_activation_screen.dart';
 import 'features/modes/explorer/completed/presentation/screen/explorer_upload_success_screen.dart';

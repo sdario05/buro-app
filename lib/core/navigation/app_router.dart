@@ -1,7 +1,9 @@
 import 'package:buro_app/features/job_detail/presentation/screen/job_detail_screen.dart';
 import 'package:buro_app/features/login/presentation/screen/login_screen.dart';
+import 'package:buro_app/features/modes/explorer/generate_cv/presentation/screen/explorer_activation_screen.dart';
 import 'package:buro_app/features/modes/explorer/generate_cv/presentation/screen/explorer_course_question_screen.dart';
 import 'package:buro_app/features/modes/explorer/generate_cv/presentation/screen/explorer_course_screen.dart';
+import 'package:buro_app/features/modes/explorer/generate_cv/presentation/screen/explorer_cv_completed_screen.dart';
 import 'package:buro_app/features/modes/explorer/generate_cv/presentation/screen/explorer_cv_summary_screen.dart';
 import 'package:buro_app/features/modes/explorer/generate_cv/presentation/screen/explorer_education_question_screen.dart';
 import 'package:buro_app/features/modes/explorer/generate_cv/presentation/screen/explorer_education_screen.dart';
@@ -11,7 +13,9 @@ import 'package:buro_app/features/modes/explorer/generate_cv/presentation/screen
 import 'package:buro_app/features/modes/explorer/generate_cv/presentation/screen/explorer_personal_info_question_screen.dart';
 import 'package:buro_app/features/modes/explorer/generate_cv/presentation/screen/explorer_personal_info_screen.dart';
 import 'package:buro_app/features/modes/explorer/generate_cv/presentation/screen/explorer_photo_question_screen.dart';
+import 'package:buro_app/features/modes/explorer/generate_cv/presentation/screen/explorer_photo_screen.dart';
 import 'package:buro_app/features/modes/explorer/generate_cv/presentation/screen/explorer_profession_input_screen.dart';
+import 'package:buro_app/features/modes/explorer/generate_cv/presentation/screen/explorer_professional_summary_screen.dart';
 import 'package:buro_app/features/modes/explorer/generate_cv/presentation/screen/explorer_professional_welcome_screen.dart';
 import 'package:buro_app/features/modes/mode_explanation/presentation/screen/mode_explanation_screen.dart';
 import 'package:buro_app/features/modes/explorer/completed/presentation/screen/explorer_upload_success_screen.dart';
@@ -31,6 +35,7 @@ import 'package:buro_app/features/modes/explorer/generate_cv/presentation/screen
 import 'package:buro_app/features/modes/explorer/generate_cv/presentation/screen/explorer_generate_cv_welcome_screen.dart';
 import 'package:buro_app/features/onboarding/presentation/screen/onboarding_screen.dart';
 import 'package:buro_app/features/home/presentation/screen/home_screen.dart';
+import 'package:buro_app/features/modes/explorer/generate_cv/presentation/screen/explorer_cv_photo_screen.dart';
 import 'package:go_router/go_router.dart';
 
 final GoRouter router = GoRouter(
@@ -207,9 +212,6 @@ final GoRouter router = GoRouter(
                                                                                                               name: 'explorer_contact_from_explorer_course',
                                                                                                               path: '/explorer_contact_from_explorer_course',
                                                                                                               builder: (context, state) => const ExplorerContactScreen(),
-                                                                                                              routes: [
-
-                                                                                                              ]
                                                                                                           ),
 
                                                                                                         ]
@@ -218,9 +220,6 @@ final GoRouter router = GoRouter(
                                                                                                         name: 'explorer_contact_from_explorer_course_question',
                                                                                                         path: '/explorer_contact_from_explorer_course_question',
                                                                                                         builder: (context, state) => const ExplorerContactScreen(),
-                                                                                                        routes: [
-
-                                                                                                        ]
                                                                                                     ),
                                                                                                   ]
                                                                                               ),
@@ -228,9 +227,6 @@ final GoRouter router = GoRouter(
                                                                                                   name: 'explorer_course_question_from_explorer_experience_question',
                                                                                                   path: '/explorer_course_question_from_explorer_experience_question',
                                                                                                   builder: (context, state) => const ExplorerCourseQuestionScreen(),
-                                                                                                  routes: [
-
-                                                                                                  ]
                                                                                               ),
                                                                                             ]
                                                                                         ),
@@ -242,13 +238,80 @@ final GoRouter router = GoRouter(
                                                                                 name: 'explorer_profession_input_from_explorer_professional_welcome',
                                                                                 path: '/explorer_profession_input_from_explorer_professional_welcome',
                                                                                 builder: (context, state) => const ExplorerProfessionInputScreen(),
-                                                                                routes: [
-
-                                                                                ]
                                                                             ),
                                                                           ]
                                                                       ),
+                                                                      GoRoute(
+                                                                         name: 'explorer_profession_input_from_explorer_cv_summary',
+                                                                         path: '/explorer_profession_input_from_explorer_cv_summary',
+                                                                         builder: (context, state) => const ExplorerProfessionInputScreen(),
+                                                                      ),
+                                                                      GoRoute(
+                                                                         name: 'explorer_experience_from_explorer_cv_summary',
+                                                                         path: '/explorer_experience_from_explorer_cv_summary',
+                                                                         builder: (context, state) => const ExplorerExperienceScreen(),
+                                                                      ),
+                                                                      GoRoute(
+                                                                         name: 'explorer_language_from_explorer_cv_summary',
+                                                                         path: '/explorer_language_from_explorer_cv_summary',
+                                                                         builder: (context, state) => const ExplorerLanguageScreen(),
+                                                                      ),
+                                                                      GoRoute(
+                                                                         name: 'explorer_education_from_explorer_cv_summary',
+                                                                         path: '/explorer_education_from_explorer_cv_summary',
+                                                                         builder: (context, state) => const ExplorerEducationScreen(),
+                                                                      ),
+                                                                      GoRoute(
+                                                                         name: 'explorer_personal_info_from_explorer_cv_summary',
+                                                                         path: '/explorer_personal_info_from_explorer_cv_summary',
+                                                                         builder: (context, state) => const ExplorerPersonalInfoScreen(),
+                                                                      ),
+                                                                      GoRoute(
+                                                                          name: 'explorer_cv_photo_from_explorer_cv_summary',
+                                                                          path: '/explorer_cv_photo_from_explorer_cv_summary',
+                                                                          builder: (context, state) => const ExplorerCVPhotoScreen(),
+                                                                          routes: [
+                                                                            GoRoute(
+                                                                                name: 'explorer_professional_summary',
+                                                                                path: '/explorer_professional_summary',
+                                                                                builder: (context, state) => const ExplorerProfessionalSummaryScreen(),
+                                                                                routes: [
+                                                                                  GoRoute(
+                                                                                    name: 'explorer_cv_completed',
+                                                                                    path: '/explorer_cv_completed',
+                                                                                    builder: (context, state) => const ExplorerCVCompletedScreen(),
+                                                                                    routes: [
+                                                                                      GoRoute(
+                                                                                        name: 'explorer_activation',
+                                                                                        path: '/explorer_activation',
+                                                                                        builder: (context, state) => const ExplorerActivationScreen(),
+                                                                                        routes: [
+                                                                                          GoRoute(
+                                                                                            name: 'explorer_home_from_explorer_activation',
+                                                                                            path: '/explorer_home_from_explorer_activation',
+                                                                                            builder: (context, state) => const ExplorerHomeScreen(),
+                                                                                          ),
+                                                                                        ]   
+                                                                                      ),
+                                                                                    ]   
+                                                                                  ),
+                                                                                ]   
+                                                                            ), 
+                                                                          ]
+                                                                      ),                              
                                                                     ]
+                                                                ),
+                                                                GoRoute(
+                                                                  name: 'explorer_photo',
+                                                                  path: '/explorer_photo',
+                                                                  builder: (context, state) => const ExplorerPhotoScreen(),
+                                                                  routes: [
+                                                                    GoRoute(
+                                                                      name: 'explorer_cv_summary_from_explorer_photo',
+                                                                      path: '/explorer_cv_summary_from_explorer_photo',
+                                                                      builder: (context, state) => const ExplorerCVSummaryScreen(),
+                                                                    ),
+                                                                  ]
                                                                 ),
                                                               ]
                                                           ),
@@ -258,9 +321,6 @@ final GoRouter router = GoRouter(
                                                         name: 'explorer_photo_question_from_explorer_personal_info_question',
                                                         path: '/explorer_photo_question_from_explorer_personal_info_question',
                                                         builder: (context, state) => const ExplorerPhotoQuestionScreen(),
-                                                        routes: [
-
-                                                        ]
                                                     ),
                                                   ]
                                               ),
@@ -268,9 +328,8 @@ final GoRouter router = GoRouter(
                                                   name: 'explorer_personal_info_question_from_explorer_education_question',
                                                   path: '/explorer_personal_info_question_from_explorer_education_question',
                                                   builder: (context, state) => const ExplorerPersonalInfoQuestionScreen(),
-                                                  routes: [
-                                                  ]
                                               ),
+
                                             ]
                                         ),
                                       ]

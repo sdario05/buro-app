@@ -99,12 +99,12 @@ class _ExplorerCVSummaryScreenState extends State<ExplorerCVSummaryScreen> {
                         // Summary of CV data
                         _buildSummaryItem(
                           'Profesión:', 'Profesion',
-                          onEdit: () => widget.onNavigate('explorer_profession_input', data: widget.cvData),
+                          onEdit: () => context.goNamed('explorer_profession_input_from_explorer_cv_summary'),
                         ),
 
                         _buildSummaryItem(
                           'Experiencia laboral:', 'experiencia',
-                          onEdit: () => widget.onNavigate('explorer_experience', data: widget.cvData),
+                          onEdit: () => context.goNamed('explorer_experience_from_explorer_cv_summary'),
                           isMultiline: true,
                         ),
 
@@ -112,34 +112,34 @@ class _ExplorerCVSummaryScreenState extends State<ExplorerCVSummaryScreen> {
                           _buildSummaryItem(
                             '',
                             'experiencia',
-                            onEdit: () => widget.onNavigate('explorer_experience', data: widget.cvData),
+                            onEdit: () => context.goNamed('explorer_experience_from_explorer_cv_summary'),
                             isMultiline: true,
                           ),
 
                         _buildSummaryItem(
                           'Idioma nativo:', 'idioma',
-                          onEdit: () => widget.onNavigate('explorer_language', data: widget.cvData),
+                          onEdit: () => context.goNamed('explorer_language_from_explorer_cv_summary'),
                         ),
 
                         _buildSummaryItem(
                           'Máx. nivel educativo:', 'educacion',
-                          onEdit: () => widget.onNavigate('explorer_education', data: widget.cvData),
+                          onEdit: () => context.goNamed('explorer_education_from_explorer_cv_summary'),
                         ),
 
                         _buildSummaryItem(
                           'Descripción personal:', 'descripcion',
-                          onEdit: () => widget.onNavigate('explorer_personal_info', data: widget.cvData),
+                          onEdit: () => context.goNamed('explorer_personal_info_from_explorer_cv_summary'),
                           isMultiline: true,
                         ),
 
                         _buildSummaryItem(
                           'Características propias:', 'caracteristica',
-                          onEdit: () => widget.onNavigate('explorer_personal_info', data: widget.cvData),
+                          onEdit: () => context.goNamed('explorer_personal_info_from_explorer_cv_summary'),
                         ),
 
                         _buildSummaryItem(
                           'Foto de perfil:', 'foto',
-                          onEdit: () => widget.onNavigate('explorer_cv_photo', data: widget.cvData),
+                          onEdit: () => context.goNamed('explorer_cv_photo_from_explorer_cv_summary'),
                           hasPhoto: true,
                           photoPath: 'ruta foto',
                         ),
